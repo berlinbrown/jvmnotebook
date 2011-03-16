@@ -1,0 +1,1 @@
+The Java Virtual Machine ( Sun's JVM is called HotSpot ) is a java bytecode interpreter which is fast, portable and secure. Jython, JRuby, Scala, ABCL (Common Lisp) are popular language implementations that run on the JVM that allow for the jvmcookbook sugar of their particular languages.
