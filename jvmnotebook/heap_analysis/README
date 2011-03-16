@@ -1,0 +1,89 @@
+#
+# Copyright (C) 2008-2009  Berlin Brown (Botnode.com).  All rights reserved.
+# Contact berlin.brown@gmail.com for more questions
+#
+# Simple python script for parsing the garbage collection output
+# 12/21/2008
+#
+# The following arguments were passed to the JVM:
+# java -verbosegc -verbosegc -verbosegc
+#   -XX:+PrintGCDetails -XX:+PrintGCTimeStamps CrashJVM -Xms24MB -Xmx32MB > gc_anal.txt
+#
+# Tested with:
+#
+# java version "1.6.0_10"
+# Java(TM) SE Runtime Environment (build 1.6.0_10-b33)
+# Java HotSpot(TM) Client VM (build 11.0-b15, mixed mode, sharing)
+#
+# Operating System:
+#
+# Linux houston 2.6.27-9-generic #1 SMP Thu Nov 20 21:57:00 UTC 2008 i686 GNU/Linux
+#
+# For regex notes, see:
+# http://www.amk.ca/python/howto/regex/
+#
+# http://java.sun.com/docs/hotspot/gc1.4.2/example.html
+# The minor collection output for these options produce output of the form
+# [GC [<collector>: <starting occupancy1> -> <ending occupancy1>, <pause time1> secs] <starting occupancy3> -> <ending occupancy3>, <pause time3> secs]
+
+
+Usage:
+
+Use './c.sh' to compile the Java programs.  Two class files
+will be generated.
+
+Use './r.sh' to launch the heap analysis server tool.
+Visit http://localhost:7000 for the heap analysis web application.
+
+Use 'python gc_parse.py' to parse the java GC statistics
+
+Use './g.sh' to generate the gnu plot chart data
+
+Use './plot.sh' to generate a gnuplot PNG image
+
+#########
+# Notes
+#########
+
+With a main class and the Better Report Bean.
+class server.BetterReportBean
+36 garbage collections were performed.
+
+Here is some output from the garbage colection report:
+...
+[GC 1277K->390K(5056K), 0.0006050 secs]
+[GC 1286K->399K(5056K), 0.0005540 secs]
+[GC 1294K->407K(5056K), 0.0005580 secs]
+[GC 1303K->416K(5056K), 0.0009580 secs]
+[GC 1311K->424K(5056K), 0.0006540 secs]
+[GC 1320K->431K(5056K), 0.0007520 secs]
+[GC 1327K->431K(5056K), 0.0012980 secs]
+...
+...
+Time to garbage collect:
+(* 39 0.00070)
+0.027 seconds.
+
+The histogram data from the heap analysis tool shows a total size of:
+647,190
+
+With the normal class, Simple Report Bean, there
+were.
+468 garbage collections. 
+
+Here is some output from the garbage collection report:
+...
+GC 15539K->14179K(20844K), 0.0034280 secs]
+[GC 15587K->14221K(20844K), 0.0033610 secs]
+[GC 15629K->14269K(20844K), 0.0033300 secs]
+[GC 15677K->14311K(20844K), 0.0033950 secs]
+[GC 15719K->14323K(20844K), 0.0033050 secs]
+...
+...
+
+Time to garbage collect = 1.55 seconds
+(* 470  0.0033050 )
+
+The histogram data from the heap analysis tool shows a total size of:
+1,516,712 bytes
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+  	<session-factory>
+    	<property name="query.substitutions">true 1, false 0, yes 'Y', no 'N'</property>
+
+		<!-- JDBC connection pool (use the built-in) -->
+        <property name="connection.pool_size">1</property>
+
+		<!-- MYSQL Hibernate Config Options org/hibernate/dialect/MySQLDialect -->
+    	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+    	<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    	<property name="connection.url">jdbc:mysql:///botlist_development</property>
+    	<property name="connection.username">USER</property>
+    	<property name="connection.password">PASSWORD</property>
+
+		<!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+
+		<!-- Enable Hibernate's automatic session context management -->
+		<!-- You may also use jta in a managed environment -->
+        <property name="current_session_context_class">thread</property>
+
+		<!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+				
+		<!-- Define the hibernate mapping file -->
+		<mapping resource="Botlist.hbm.xml"/>
+
+	</session-factory>
+</hibernate-configuration>
+<!-- End of the File -->

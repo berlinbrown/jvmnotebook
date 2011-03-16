@@ -1,0 +1,8 @@
+ http://norvig.com/jscheme.html
+ ---------------------------------
+ Jscheme is my implementation of Scheme in Java. This page presents Jscheme version 1.4, 
+ the last version that I released (in April 1998). If you want a mercilessly small, 
+ easily modifiable version, this is it. Since April 1998, development has been picked up by others, 
+ notably Tim Hickey at Brandeis and Ken Anderson at BBN. 
+ ---------------------------------
+ 

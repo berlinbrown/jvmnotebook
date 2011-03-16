@@ -1,0 +1,80 @@
+%%--------------------------------------
+%% Berlin Brown
+%% botlist - ghostnetwork and mulit-language architecture
+%% Date: 3/28/2008
+%%--------------------------------------
+
+% Use report or article
+\documentclass[12pt]{report}
+
+\usepackage{graphicx}
+\usepackage{latexsym}
+%-----------------------------
+\oddsidemargin = .5in
+\textwidth = 6in
+
+\headheight = 0in
+\headsep = 0in
+\topmargin = .25in
+\textheight = 8.5in
+
+\floatsep = .29in
+\textfloatsep = \floatsep
+\intextsep = \floatsep
+%-----------------------------
+
+\begin{document}
+
+\title{Botlist Ghost Network - Building a Web Application with a Multi-Language Architecture}
+
+\author{Berlin Brown\\
+  Founder of Botnode.com Software\\
+  berlin.brown at gmail.com\\
+  Atlanta, Ga\\
+  \date{\today}}
+
+\maketitle
+
+%%--------------------------------------
+%% Abstract
+%%--------------------------------------
+
+\begin{abstract}
+This article presents Botlist-Network (Botlist).  Botlist is a 
+web application and information retrieval system that aims to collect
+and analyze content from the vast world wide web.  Botlist is an specification
+for describing the platform, the Botlist web front end and the Botlist backend
+infrastructure for crawling and analyzing web documents and converting those
+documents into a machine readable format such as RDF semantic web formats.
+
+This article also looks at the use of several powerful open source programming
+languages.  Each language is used for it strenghs.
+\end{abstract}
+
+%%--------------------------------------
+%% Table of Contents
+%%--------------------------------------
+\tableofcontents
+
+\include{overview}
+\include{java}
+\include{jruby}
+\include{python}
+\include{scala}
+\include{haskell}
+\include{erlang}
+\include{testdriven}
+\include{factor}
+\include{future}
+
+%%--------------------------------------
+%% Bibliography (set the widest label)
+%%--------------------------------------
+\bibliographystyle{plain}
+\nocite{*}
+\bibliography{references}
+
+\end{document}
+%%--------------------------------------
+%% End of document 
+%%--------------------------------------

@@ -1,0 +1,14 @@
+#---JGAP Configuration File---
+#Thu Apr 16 16:48:08 EDT 2009
+Configurable.List1[0]=List1_value_1
+Configurable.List2[2]=List2_value_3
+Configurable.List3[1]=List3_value_2
+Configurable.text3=text3_value
+Configurable.text2=text2_value
+Configurable.text1=text1_value
+Configurable.List1[2]=List1_value_3
+Configurable.List2[1]=List2_value_2
+Configurable.List3[0]=List3_value_1
+Configurable.List1[1]=List1_value_2
+Configurable.List2[0]=List2_value_1
+Configurable.List3[2]=List3_value_3

@@ -1,0 +1,39 @@
+% %-------------------------------------- % Scala and Lift
+% %--------------------------------------
+\chapter{Enterprise Development with Struts2, JSF, and Spring}
+
+With all the discussion centered around the java web-application frameworks
+including Struts, SpringMVC and WebWork, how does one interface these with
+Jython and why would you want to do so. Normally, you will do this the same way
+that you would in a typical standalone console application. You must find a way
+to invoke the Jython interpreter and then execute your Jython code. The same is
+done in a Servlet environment. This example demonstrates how to put together a
+web-application that uses the Struts MVC (model, view, controller) framework and
+also uses Hibernate for persisting our objects to the database. The JSP files
+make up all the of the View code and Jython is used for all the back-end work.
+The goal of the 'BotList  Link Aggregator Application' is to create a web-app
+that stores a set of links associated with keywords and description and also
+presents an interface to delete, view, edit, and list the links for the user.
+
+The Stuts Action class contains the majority of the business logic for your
+web-application. In this example, the Jython classes are subclasses of the
+Action class. The one Java Action class acts as a controller; depending on the
+request from the user, this Action class invokes one of the Jython Action
+classes accordingly. Normally, an Action will just overwrite the execute method
+as shown in the Jython code below.
+
+Our web-application would not be complete without a clear approach for
+persisting the link data. So we have used the Hibernate ORM (object relational
+mapping) library do the backend persistance work for us. It is not really
+necessary to use Hibernate for such a simple application, but as your enterprise
+application grows, the need for a more robust persistance mechanism will greatly
+become evident. MySQL 5.0.2 is used for our database and most of the recent
+MySQL connector APIs will work with this example.
+
+Almost like Struts, a lot of the hibernate settings are defined in a hibernate
+configuration file, 'hibernate.cfg.xml' and your hibernate mapping file,
+'Botlist.hbm.xml'. Normally the most important settings for your application
+include what database dialect you are using; we are using MySQL and the
+definition of your hibernate POJO beans. The simple bean contains an almost
+one-to-one mapping between your database fields and the Java members,
+accompanied by the appropriate getters and setters.

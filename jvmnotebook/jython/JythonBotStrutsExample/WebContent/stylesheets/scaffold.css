@@ -1,0 +1,96 @@
+body { background-color: #fff; color: #333; }
+
+body, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   10pt;
+  line-height: 18px;
+  margin-left: 0px;
+  margin-top: 0px;
+}
+
+
+/** End of Default Link Settings */
+
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#ErrorExplanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#ErrorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#ErrorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#ErrorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+div.uploadStatus {
+  margin: 5px;
+}
+
+div.progressBar {
+  margin: 5px;
+}
+
+div.progressBar div.border {
+  background-color: #fff;
+  border: 1px solid grey;
+  width: 100%;
+}
+
+div.progressBar div.background {
+  background-color: #333;
+  height: 18px;
+  width: 0%;
+}
+
+
+/** Link Styles */
+A.console:link {
+	color: #858B23;
+	font-size: 10pt;
+	padding: 4px 4px 4px 4px;
+	text-decoration: none;
+}
+A.console:visited {
+	color: #858B23;
+	font-size: 10pt;
+	padding: 4px 4px 4px 4px;
+	text-decoration: none;
+}
+A.console:active {
+	color: #858B23;
+	font-size: 10pt;
+	padding: 4px 4px 4px 4px;
+	text-decoration: none;
+}
+A.console:hover {
+	color: #A54702;
+	font-size: 10pt;
+	padding: 4px 4px 4px 4px;
+	text-decoration: none;
+}
+

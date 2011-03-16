@@ -1,0 +1,25 @@
+%%--------------------------------------
+%% Scala and Lift
+%%--------------------------------------
+\chapter{Standard Java Libraries}
+
+Scala is a JVM language.
+
+Our web-application would not be complete without a clear approach 
+for persisting the link data. So we have used the Hibernate ORM 
+(object relational mapping) library do the backend persistance work for us. 
+It is not really necessary to use Hibernate for such a simple 
+application, but as your enterprise application grows, 
+the need for a more robust persistance mechanism will greatly become evident. 
+MySQL 5.0.2 is used for our database and most of the recent 
+MySQL connector APIs will work with this example.
+
+Almost like Struts, a lot of the hibernate settings 
+are defined in a hibernate configuration file, 'hibernate.cfg.xml' 
+and your hibernate mapping file, 'Botlist.hbm.xml'. 
+Normally the most important settings for your application 
+include what database dialect you are using; we are using MySQL 
+and the definition of your hibernate POJO beans. 
+The simple bean contains an almost one-to-one mapping between 
+your database fields and the Java members, accompanied by 
+the appropriate getters and setters.

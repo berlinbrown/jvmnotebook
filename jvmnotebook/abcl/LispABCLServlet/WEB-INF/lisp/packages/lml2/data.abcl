@@ -1,0 +1,13 @@
+; -*- Mode: Lisp -*-
+(SYSTEM:INIT-FASL :VERSION 27)
+(SETQ SYSTEM::*FASL-SOURCE* #P"H:\\Program Files\\Apache Software Foundation\\Tomcat 5.0\\webapps\\demosvlet\\WEB-INF\\lisp\\packages\\lml2\\data.lisp")
+(IN-PACKAGE #:LML2)
+(DEFVAR *HTML-STREAM* *STANDARD-OUTPUT*)
+(DEFVAR *PRINT-SPACES* NIL)
+(DEFVAR *INDENT* 0)
+(DEFVAR +XML-PROLOGUE-STRING+ "<?xml version=\"1.0\" encoding=\"iso-8859-1\" standalone=\"yes\"?>")
+(DEFVAR +HTML4-DTD-STRING+ "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">")
+(DEFVAR +XHTML11-DTD-STRING+ "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">")
+(DEFVAR +XHTML10-STRICT-DTD-STRING+ "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml10/DTD/xhtml10-strict.dtd\">")
+(DEFVAR +XHTML10-TRANSITIONAL-DTD-STRING+ "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml10/DTD/xhtml10-transitional.dtd\">")
+(DEFVAR +XHTML10-FRAMESET-DTD-STRING+ "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Frameset//EN\" \"http://www.w3.org/TR/xhtml10/DTD/xhtml10-frameset.dtd\">")

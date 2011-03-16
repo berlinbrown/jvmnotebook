@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project name="Hello World" default="build" basedir=".">
+
+<!--
+ ///////////////////////////////////////////////////////////
+ Copyright Berlin Brown - 2009
+ 4/4/2009
+ On win32 use nant -buildfile:adder.build -t:mono-2.0
+ 
+ Tested with Mono win32
+ Mono JIT compiler version 2.4 (tarball)
+ Copyright (C) 2002-2008 Novell, Inc and Contributors. www.mono-project.com
+ ///////////////////////////////////////////////////////////
+ -->
+
+        <description>The Hello World of build files.</description>
+        <property name="debug" value="true" overwrite="false" />
+
+        <target name="clean" description="remove all generated files">
+            <delete file="adder.exe" failonerror="false" />
+            <delete file="adder.exe.mdb" failonerror="false" />
+        </target>
+
+        <target name="build" description="compiles the source code">
+            <csc target="exe" output="adder.exe" debug="${debug}">
+                <sources>                    
+                    <includes name="Class1.cs" />
+                    <includes name="AdderRandom.cs" />
+                    <includes name="EquationGenome.cs" />
+                    <includes name="Genome.cs" />
+                    <includes name="Population.cs" />
+                </sources>
+            </csc>
+        </target>
+</project>

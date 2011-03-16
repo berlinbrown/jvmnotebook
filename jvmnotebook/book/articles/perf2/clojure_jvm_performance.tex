@@ -1,0 +1,67 @@
+%%--------------------------------------
+%% Berlin Brown
+%% Clojure Performance
+%% Date: 8/8/2009
+%%--------------------------------------
+
+% Use report or article
+\documentclass[12pt]{report}
+
+\usepackage{graphicx}
+\usepackage{latexsym}
+%-----------------------------
+\oddsidemargin = .4in
+\textwidth = 6.2in
+
+\headheight = 0in
+\headsep = 0in
+\topmargin = .25in
+\textheight = 8.2in
+
+\floatsep = .29in
+\textfloatsep = \floatsep
+\intextsep = \floatsep
+%-----------------------------
+
+\begin{document}
+
+\title{JVM Notebook: Basic Clojure, Java and JVM Language performance}
+
+\author{Berlin Brown\\
+  Founder of Botnode.com Software\\
+  berlin.brown at gmail.com
+  \date{\today}}
+
+\maketitle
+
+%%--------------------------------------
+%% Abstract
+%%--------------------------------------
+
+\begin{abstract}
+This paper describes the Clojure JVM programming language
+and a host of other popular programming languages that run on the
+Java Virtual Machine.  We study in detail
+the program execution time and heap memory usage
+of several different small applications
+with Clojure, Scala, Pure Java and JRuby.
+\end{abstract}
+
+%%--------------------------------------
+%% Table of Contents
+%%--------------------------------------
+\tableofcontents
+
+\include{overview_and_jvm_languages}
+
+%%--------------------------------------
+%% Bibliography (set the widest label)
+%%--------------------------------------
+\bibliographystyle{plain}
+\nocite{*}
+\bibliography{references}
+
+\end{document}
+%%--------------------------------------
+%% End of document 
+%%--------------------------------------

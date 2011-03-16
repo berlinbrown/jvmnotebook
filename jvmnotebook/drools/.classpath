@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="lib/drools/drools-api-5.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/drools/drools-compiler-5.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/drools/drools-core-5.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/drools/drools-jsr94-5.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/drools/lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/drools/lib/joda-time-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/drools/lib/mvel2-2.0.10.jar"/>
+	<classpathentry kind="lib" path="lib/drools/lib/janino-2.5.15.jar"/>
+	<classpathentry kind="lib" path="lib/drools/lib/core-3.4.2.v_883_R34x.jar"/>
+	<classpathentry kind="lib" path="lib/drools/lib/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="lib/drools/lib/antlr-runtime-3.1.3.jar"/>
+	<classpathentry kind="lib" path="lib/drools/lib/xstream-1.3.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

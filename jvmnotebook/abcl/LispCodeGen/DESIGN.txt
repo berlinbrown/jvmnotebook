@@ -1,0 +1,71 @@
+##
+## Berlin Brown
+## 
+## Design.txt - Focus on the design of LispGen
+##
+## 7/20/2005
+##
+## Also see: http://www.newspiritcompany.com/lispgen.html
+##
+
+-----------------------------------------------------------
+
+Misc Notes:
+
+ - We will need to make the page creation by working from top to bottom
+ 	as opposed to function driven.
+
+-----------------------------------------------------------
+
+*Code Generation*
+
+	+PHP Aspect:
+		
+		The focus of the PHP component centers around
+		CRUD operations(Create Read Update and Delete).
+		A set of libraries are devoted to create server-side pages 
+		for 'create' and insert operations; modules are devoted to 
+		'read' operation, etc.
+						
+*Deploy*
+
+	The deploy component is based on the j-ftp java library.
+	This library provides support for transferring files via
+	FTP and SFTP.
+	
+	
+* Source Code *
+ (July 18 2005)
+ 
+ - System Level Lisp Modules:
+ 	
+ 	/TOPDIR/
+ 		
+ 		(lisp-config.asd) - includes file links
+ 			[package.lisp, lisp-unit.lisp, lisp-config.lisp]
+ 			
+ 		(lispgen.asd) - includes
+ 			[lispgen.lisp]
+ 		
+ 		asdf.lisp - ASDF package system (external library)
+ 		lisp-unit.lisp - Lisp unit testing (external library)
+ 		
+		lisp-config.lisp - Configure the application through global
+							variables
+		run-all.lisp - Setup and define the ASDF modules used
+		package.lisp - Define external objects and functions here
+		
+	/TOPDIR/codegen/
+		
+		- codegen-lib.asd
+		- codegen-lib.lisp		
+	
+	/TOPDIR/tests/
+	
+		- test-suite.asd
+		- test-suite.lisp - test cases
+		
+ 		
+ 	
+ 	
+

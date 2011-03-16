@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.16 in css mode. -->
+<html>
+  <head>
+    <title>app.lisp</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #000000;
+        background-color: #ffffff;
+      }
+      .builtin {
+        /* font-lock-builtin-face */
+        color: #0000ff;
+      }
+      .comment {
+        /* font-lock-comment-face */
+        color: #0000ff;
+        background-color: #f5f5f5;
+        font-style: italic;
+      }
+      .function-name {
+        /* font-lock-function-name-face */
+        color: #0000ff;
+        background-color: #f5f5f5;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #8b008b;
+      }
+      .show-paren-match {
+        /* show-paren-match-face */
+        background-color: #40e0d0;
+      }
+      .string {
+        /* font-lock-string-face */
+        color: #ff0000;
+        background-color: #f5f5f5;
+      }
+      .warning {
+        /* font-lock-warning-face */
+        color: #ff0000;
+        background-color: #fffacd;
+      }
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+<span class="comment">;;
+;; app.lisp
+;;
+</span>
+(<span class="keyword">in-package</span> <span class="builtin">:servlet1</span>)
+
+(<span class="keyword">defun</span> <span class="function-name">get-request-parameters</span> (request)
+  (<span class="keyword">let</span> ((param-names-enum (HttpServletRequest.getParameterNames request)))
+    (<span class="keyword">loop</span> while (Enumeration.hasMoreElements param-names-enum)
+      for pname = (unbox (Enumeration.nextElement param-names-enum))
+      collect (intern (string-upcase  pname) <span class="builtin">:keyword</span>)
+      collect (HttpServletRequest.getParameter request pname))))
+
+(<span class="keyword">defun</span> <span class="function-name">analyze-request</span> (request)
+  (let-if (session (HttpServletRequest.getSession request t))
+          (<span class="keyword">let</span> ((request-parameters (get-request-parameters request)))
+            (let-if (cont-str (getf request-parameters <span class="builtin">:cont</span>))
+                    (let-if (cont (get-continuation (str-&gt;int cont-str)))
+                            (<span class="keyword">let</span> ((verb (getf request-parameters <span class="builtin">:verb</span>)))
+                              (format t <span class="string">"cont: ~a, verb: ~a~%"</span> cont-str verb)
+                              (list <span class="builtin">:continuation</span> cont
+                                    <span class="builtin">:verb</span> (intern (string-upcase verb) <span class="builtin">:keyword</span>)
+                                    <span class="builtin">:params</span> request-parameters))
+                          (<span class="warning">error</span> <span class="string">"wrong continuation"</span>))
+                    ()))
+          (<span class="warning">error</span> <span class="string">"there is no session"</span>)))
+
+
+(<span class="keyword">defun</span> <span class="function-name">generate-page</span> (analyzed-request processed-request)
+  (<span class="keyword">with-output-to-string</span> 
+    (*html-stream*)
+    (let-if (cont (getf analyzed-request <span class="builtin">:continuation</span>))
+              (funcall cont (cons (getf analyzed-request <span class="builtin">:verb</span>)
+                                  (getf analyzed-request <span class="builtin">:params</span>)))
+            (go-front-page))))
+
+(<span class="keyword">defun</span> <span class="function-name">generate-output</span> (request analyzed-request processed-request response)
+  (format t <span class="string">"~A:generating output for ~A, ~A~%"</span> *hit-count* analyzed-request processed-request)
+  (HttpServletResponse.setContentType response <span class="string">"text/html; charset=UTF-8"</span>)
+  (HttpServletResponse.setHeader response <span class="string">"Cache-Control"</span> <span class="string">"no-cache"</span>)
+  (<span class="keyword">let*</span> ((out (ServletResponse.getWriter response))
+         (page (time (generate-page analyzed-request processed-request))))
+    (PrintWriter.print out page))<span class="show-paren-match">)</span>
+
+<span class="comment">;; End of the File
+</span></pre>
+  </body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.16 in css mode. -->
+<html>
+  <head>
+    <title>servlet.lisp</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #000000;
+        background-color: #ffffff;
+      }
+      .builtin {
+        /* font-lock-builtin-face */
+        color: #0000ff;
+      }
+      .comment {
+        /* font-lock-comment-face */
+        color: #0000ff;
+        background-color: #f5f5f5;
+        font-style: italic;
+      }
+      .function-name {
+        /* font-lock-function-name-face */
+        color: #0000ff;
+        background-color: #f5f5f5;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #8b008b;
+      }
+      .string {
+        /* font-lock-string-face */
+        color: #ff0000;
+        background-color: #f5f5f5;
+      }
+      .type {
+        /* font-lock-type-face */
+        color: #f0e68c;
+        background-color: #4682b4;
+      }
+      .variable-name {
+        /* font-lock-variable-name-face */
+        color: #ff4500;
+        background-color: #e0ffff;
+      }
+      .warning {
+        /* font-lock-warning-face */
+        color: #ff0000;
+        background-color: #fffacd;
+      }
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+<span class="comment">;;
+;; Servlet.lisp
+;;
+</span>
+<span class="comment">;;==========================================================
+</span>(<span class="keyword">defpackage</span> <span class="type">:servlet-gen</span>
+  (<span class="builtin">:use</span> <span class="builtin">:common-lisp</span> <span class="builtin">:jfli</span>))
+
+(<span class="keyword">in-package</span> <span class="builtin">:servlet-gen</span>)
+
+<span class="comment">;; Servlet stuff
+</span>(def-java-class <span class="string">"javax.servlet.ServletResponse"</span>)
+(def-java-class <span class="string">"java.io.PrintWriter"</span>)
+(def-java-class <span class="string">"javax.servlet.http.HttpServletResponse"</span>)
+(def-java-class <span class="string">"javax.servlet.http.HttpServletRequest"</span>)
+(def-java-class <span class="string">"javax.servlet.http.HttpSession"</span>)
+
+(def-java-class <span class="string">"java.util.Enumeration"</span>)
+
+(<span class="keyword">defpackage</span> <span class="type">:servlet1</span>
+  (<span class="builtin">:use</span> <span class="builtin">:common-lisp</span> <span class="builtin">:java</span>
+        <span class="builtin">:jfli</span> <span class="builtin">:servlet-gen</span>
+        <span class="builtin">:lml2</span>
+        <span class="string">"java.lang"</span>
+        <span class="string">"java.io"</span>
+        <span class="string">"java.util"</span>
+        <span class="string">"javax.servlet"</span>
+        <span class="string">"javax.servlet.http"</span>))
+
+<span class="comment">;;==========================================================
+</span>
+(<span class="keyword">in-package</span> <span class="builtin">:servlet1</span>)
+
+(<span class="keyword">defparameter</span> <span class="variable-name">*hit-count*</span> 0)
+
+<span class="comment">;; Helper functions and macros
+</span>
+(<span class="keyword">defmacro</span> <span class="function-name">let-if</span> ((var test-form) if-true <span class="type">&amp;optional</span> if-false)
+  `(<span class="keyword">let</span> ((,var ,test-form))
+      (<span class="keyword">if</span> ,var ,if-true ,if-false)))
+
+(<span class="keyword">defmacro</span> <span class="function-name">str+</span> (<span class="type">&amp;rest</span> strings)
+  `(concatenate 'string ,@strings))
+
+(<span class="keyword">defun</span> <span class="function-name">str-&gt;int</span> (str)
+  (<span class="keyword">ignore-errors</span> (parse-integer str)))
+
+(<span class="keyword">defun</span> <span class="function-name">unbox</span> (obj)
+  (<span class="keyword">if</span> (java:java-object-p obj)
+      (java:jobject-lisp-value obj)
+      obj))
+
+<span class="comment">;; Servlet entry functions that are redefined in app
+</span>
+(<span class="keyword">defun</span> <span class="function-name">analyze-request</span> (request)
+        (<span class="keyword">declare</span> (ignore request)))
+
+(<span class="keyword">defun</span> <span class="function-name">process-request</span> (request analyzed-request)
+        (<span class="keyword">declare</span> (ignore request analyzed-request)))
+
+(<span class="keyword">defun</span> <span class="function-name">generate-output</span> (request analyzed-request processed-request response)
+        (<span class="keyword">declare</span> (ignore request analyzed-request processed-request
+                                                         response )))
+
+(<span class="keyword">defun</span> <span class="function-name">servlet1-service</span> (request response)
+  (<span class="keyword">with-simple-restart</span> (<span class="warning">abort</span> <span class="string">"Abort servlet execution"</span>)
+                       (<span class="keyword">let*</span> ((analyzed-request
+                               (<span class="keyword">loop</span> (<span class="keyword">with-simple-restart</span> 
+                                      (retry <span class="string">"Retry analyze request"</span>)
+                                      (<span class="keyword">return</span> (analyze-request request)))))
+                              (processed-request
+                               (<span class="keyword">loop</span> (<span class="keyword">with-simple-restart</span> 
+                                      (retry <span class="string">"Retry process request ~S"</span> analyzed-request)
+                                      (<span class="keyword">return</span> (process-request request analyzed-request))))))
+                         (<span class="keyword">loop</span> (<span class="keyword">with-simple-restart</span> 
+                                (retry <span class="string">"Retry generating output for ~S, ~S"</span>
+                                       analyzed-request processed-request)
+                                (<span class="keyword">return</span> (generate-output request analyzed-request processed-request
+                                                         response)))))))
+
+(new-class <span class="string">"SERVLET1.Servlet1"</span> <span class="string">"javax.servlet.GenericServlet"</span> ()
+           ((<span class="string">"service"</span> <span class="builtin">:void</span> <span class="builtin">:public</span> ((req <span class="string">"javax.servlet.ServletRequest"</span>)
+                                      (resp <span class="string">"javax.servlet.ServletResponse"</span>))
+                                      (<span class="keyword">with-simple-restart</span> (<span class="warning">abort</span> <span class="string">"Exit to hyperspace"</span>)
+                                             (servlet1-service req resp))))
+           ())
+
+(print <span class="string">"loading CPS-transform"</span>)
+(<span class="keyword">loop</span> for file in '(<span class="string">"one-liners.lisp"</span> <span class="string">"flow-control.lisp"</span> <span class="string">"list.lisp"</span> <span class="string">"string.lisp"</span> <span class="string">"cps.lisp"</span>)
+      do (format t <span class="string">"loading ~a ~%"</span> file)
+      do (load (merge-pathnames (str+ <span class="string">"cps/"</span> file) *load-pathname*)))
+
+<span class="comment">;;==========================================================
+</span>
+(<span class="keyword">in-package</span> <span class="builtin">:cl-user</span>)
+
+<span class="comment">;; This is an instance of servlet handler object, that used by bridge Java code
+</span>(<span class="keyword">defparameter</span> <span class="variable-name">*servlet*</span> (jfli::ref (SERVLET1::servlet1.new)))
+
+(<span class="keyword">with-simple-restart</span> 
+ (<span class="warning">abort</span> <span class="string">"Abort loading application code"</span>)
+ (<span class="keyword">loop</span> for module in '(<span class="string">"cont"</span> <span class="string">"app"</span> <span class="string">"app-pages"</span> <span class="string">"app-logic"</span>)
+   do (format t <span class="string">"loading app module ~a~%"</span> module)
+   do (<span class="keyword">with-simple-restart</span> 
+       (<span class="warning">abort</span> (format nil <span class="string">"Abort loading ~a"</span> module))
+       (<span class="keyword">loop</span> 
+        (<span class="keyword">with-simple-restart</span> (retry (format nil <span class="string">"Retry loading ~a"</span> module))
+          (<span class="keyword">return</span> (load (merge-pathnames
+                         (make-pathname <span class="builtin">:name</span> module
+                                        <span class="builtin">:type</span> <span class="string">"lisp"</span>)
+                         *load-pathname*))))))))
+
+<span class="comment">;; End of File</span></pre>
+  </body>
+</html>

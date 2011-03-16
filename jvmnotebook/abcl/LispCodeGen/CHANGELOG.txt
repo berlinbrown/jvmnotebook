@@ -1,0 +1,35 @@
+##
+## $Id$
+##
+## CHANGELOG for Lisp PHP Generator = LispGen
+##
+
+* 7/19/2005:
+	- TODO: Add support for RSS
+	- TODO: Refactor lisp support
+	- TODO: Add support for 'adding' questions, prevent SPAM	
+	- Development time(so far) is at 7 days = 60 hours
+		progress = initial PHP code generation including database connectivity
+	- Moved more hard coded globals to the config file
+
+* 7/19/2005:
+	- Bugs: need to fix it so it doesn't recompile the java application.  Also,
+		it would be nice to batch load the code generated PHP scripts.
+	- adding mysql PHP connection code
+	   possible future library, build code generation around lisp functions or macros.
+	   Eliminate typically procedural constructs.
+	- Adding additional documenation to the README.txt
+
+* 7/14/2005:
+	- Add the test suite, see test-suite.lisp
+	- To run the test suite, use (run-all-tests :org.file.lispgen.lib)
+	- Cleanups to the clean script
+	- adding php code generation system, see org/codegen
+
+* 7/10/2005:
+	- Adding support for libraries
+
+* 7/4/2005:
+	- adding lisp-unit.lisp for lisp unit testing
+	- application designed for Clisp
+	

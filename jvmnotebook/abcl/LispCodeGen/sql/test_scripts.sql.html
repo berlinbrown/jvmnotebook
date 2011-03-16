@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.16 in css mode. -->
+<html>
+  <head>
+    <title>test_scripts.sql</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #000000;
+        background-color: #ffffff;
+      }
+      .comment {
+        /* font-lock-comment-face */
+        color: #b22222;
+      }
+      .function-name {
+        /* font-lock-function-name-face */
+        color: #0000ff;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #a020f0;
+      }
+      .string {
+        /* font-lock-string-face */
+        color: #bc8f8f;
+      }
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+<span class="comment">/**
+ * Berlin Brown
+ *
+ * MySQL oriented database creation scripts
+ * prefix = akita_
+ *
+ * 1. akita_category
+ * 2. pages
+ * 3. articles
+ * 4. source_modules
+ * 5. images
+ * 6. tags
+ * 7. links
+ * 8. comments
+ * 9. users
+ * 10. color_schema
+ * 11. styles
+ */</span>
+
+<span class="comment">/**
+ *  A category contains main pages.  An example category might include
+ * pages related to java development
+ */</span>
+<span class="keyword">INSERT</span> <span class="keyword">INTO</span> akita_category <span class="keyword">VALUES</span>(
+        <span class="keyword">NULL</span>,
+        <span class="string">'Java Development'</span>,
+        <span class="string">'Java Development'</span>,
+        <span class="string">'These pages are about java development'</span>,
+        <span class="string">'2005-07-17 03:03:00'</span>,
+        1,
+        <span class="string">'visible'</span>
+);
+
+<span class="keyword">INSERT</span> <span class="keyword">INTO</span>   akita_pages <span class="keyword">VALUES</span>(
+                                        <span class="keyword">NULL</span>,
+ <span class="comment">/*  category_id*/</span>      1,
+ <span class="comment">/*  name*/</span>                     <span class="string">'java.dev.1'</span>,
+ <span class="comment">/*  title_html*/</span>               <span class="string">'Java Development Page  - 1'</span>,
+ <span class="comment">/*  description*/</span>      <span class="string">'Java Development Page  - 1'</span>,
+ <span class="comment">/*  date_added*/</span>               <span class="string">'2005-07-17 03:03:00'</span>,
+ <span class="comment">/*  author_id*/</span>                1,
+ <span class="comment">/*  status     */</span>              <span class="string">'visible'</span>
+);
+
+<span class="keyword">INSERT</span> <span class="keyword">INTO</span>   akita_pages <span class="keyword">VALUES</span>(
+                                        <span class="keyword">NULL</span>,
+ <span class="comment">/*  category_id*/</span>      1,
+ <span class="comment">/*  name*/</span>                     <span class="string">'java.dev.2'</span>,
+ <span class="comment">/*  title_html*/</span>               <span class="string">'Java Development Page  - 2'</span>,
+ <span class="comment">/*  description*/</span>      <span class="string">'Java Development Page  - 2'</span>,
+ <span class="comment">/*  date_added*/</span>               <span class="string">'2005-07-17 03:03:00'</span>,
+ <span class="comment">/*  author_id*/</span>                1,
+ <span class="comment">/*  status*/</span>                   <span class="string">'visible'</span>
+);
+
+<span class="comment">/** bug = category_id should be page_id */</span>
+<span class="keyword">INSERT</span> <span class="keyword">INTO</span>   akita_articles <span class="keyword">VALUES</span>(
+                                        <span class="keyword">NULL</span>,
+ <span class="comment">/*  category_id*/</span>      1,
+ <span class="comment">/*  name*/</span>                     <span class="string">'Article About Java'</span>,
+ <span class="comment">/*  title_html*/</span>               <span class="string">'Article About Java'</span>,
+ <span class="comment">/*  description*/</span>      <span class="string">'This is about java, have fun'</span>,
+ <span class="comment">/*  date_added*/</span>               <span class="string">'2005-07-17 03:03:00'</span>,
+ <span class="comment">/*  author_id*/</span>                1,
+ <span class="comment">/*  status*/</span>                   <span class="string">'visible'</span>,
+ <span class="comment">/*  body_text*/</span>                <span class="string">'This is about java, have fun'</span>,
+ <span class="comment">/*  size_bytes*/</span>               32
+);
+
+<span class="keyword">INSERT</span> <span class="keyword">INTO</span>   akita_articles <span class="keyword">VALUES</span>(
+                                        <span class="keyword">NULL</span>,
+ <span class="comment">/*  category_id*/</span>      1,
+ <span class="comment">/*  name*/</span>                     <span class="string">'Article About Java - 2'</span>,
+ <span class="comment">/*  title_html*/</span>               <span class="string">'Article About Java - 2'</span>,
+ <span class="comment">/*  description*/</span>      <span class="string">'This is about java, have fun - 2'</span>,
+ <span class="comment">/*  date_added*/</span>               <span class="string">'2005-07-17 03:03:00'</span>,
+ <span class="comment">/*  author_id*/</span>                1,
+ <span class="comment">/*  status*/</span>                   <span class="string">'visible'</span>,
+ <span class="comment">/*  body_text*/</span>                <span class="string">'This is about java, have fun'</span>,
+ <span class="comment">/*  size_bytes*/</span>               32
+);
+
+
+<span class="keyword">INSERT</span> <span class="keyword">INTO</span>   akita_source_modules <span class="keyword">VALUES</span>(
+                                                <span class="keyword">NULL</span>,
+ <span class="comment">/*  article_id*/</span>               1,
+ <span class="comment">/*  name*/</span>                     <span class="string">'A.java'</span>,
+ <span class="comment">/*  description*/</span>      <span class="string">'Java Class'</span>,
+ <span class="comment">/*  date_added*/</span>               <span class="string">'2005-07-17 03:03:00'</span>,
+ <span class="comment">/*  lines_source*/</span>     1,
+ <span class="comment">/*  body*/</span>                     <span class="string">'public class A { public static void main() {} }'</span>
+);
+
+<span class="keyword">INSERT</span> <span class="keyword">INTO</span>   akita_tags <span class="keyword">VALUES</span>(
+                                                <span class="keyword">NULL</span>,
+ <span class="comment">/*  article_id*/</span>               1,
+ <span class="comment">/*  value*/</span>                    <span class="string">'dog'</span>,
+ <span class="comment">/*  type*/</span>                     <span class="string">'keyword'</span>
+);
+
+<span class="keyword">INSERT</span> <span class="keyword">INTO</span>   akita_links <span class="keyword">VALUES</span>(
+                                                <span class="keyword">NULL</span>,
+ <span class="comment">/*  article_id*/</span>               1,
+ <span class="comment">/*  url*/</span>                      <span class="string">'http://www.dog.com'</span>,
+ <span class="comment">/*  link_descr*/</span>               <span class="string">'Dog.com'</span>,
+ <span class="comment">/*  type*/</span>                     <span class="string">'article_link'</span>
+);
+
+<span class="keyword">INSERT</span> <span class="keyword">INTO</span>   akita_comments <span class="keyword">VALUES</span>(
+                                                <span class="keyword">NULL</span>,
+ <span class="comment">/*  article_id*/</span>               1,
+ <span class="comment">/*  date_added*/</span>               <span class="string">'2005-07-17 03:03:00'</span>,
+ <span class="comment">/*  body*/</span>                     <span class="string">'This sucks'</span>,
+ <span class="comment">/*  size_bytes*/</span>       <span class="string">'32'</span>,
+ <span class="comment">/*  author_id*/</span>                1
+);
+
+<span class="keyword">INSERT</span> <span class="keyword">INTO</span>   akita_users <span class="keyword">VALUES</span>(
+                                                <span class="keyword">NULL</span>,
+ <span class="comment">/*  date_added*/</span>               <span class="string">'2005-07-17 03:03:00'</span>,
+ <span class="comment">/*  user_name*/</span>                <span class="string">'Berlin Brown'</span>,
+ <span class="comment">/*  email*/</span>                    <span class="string">'berlin.brown at gmail.com'</span>,
+ <span class="comment">/*  profile*/</span>          <span class="string">'Berlin Brown is a profile'</span>,
+ <span class="comment">/*  url*/</span>                      <span class="string">'http://www.newspiritcompany.com'</span>,
+ <span class="comment">/*  karma*/</span>                    1
+);
+
+<span class="comment">/**
+ * A schema will have multiple styles, styles
+ */</span>
+<span class="keyword">INSERT</span> <span class="keyword">INTO</span>   akita_color_schema <span class="keyword">VALUES</span>(
+                                                <span class="keyword">NULL</span>,
+ <span class="comment">/*  name */</span>                    <span class="string">'new.schema'</span>,
+ <span class="comment">/* type */</span>                     <span class="string">'global'</span>
+);
+
+<span class="comment">/**
+ * A schema will have many styles
+ */</span>
+<span class="keyword">INSERT</span> <span class="keyword">INTO</span>   akita_styles <span class="keyword">VALUES</span>(
+                                        <span class="keyword">NULL</span>,
+ <span class="comment">/*  schema_id */</span>               1,
+ <span class="comment">/* style_name*/</span>                <span class="string">'body.background.color'</span>,
+ <span class="comment">/*  type*/</span>                     <span class="string">'body.background.color'</span>,
+ <span class="comment">/*  value      */</span>              <span class="string">'background-color: green;'</span>
+);
+
+<span class="function-name">commit</span>;
+<span class="keyword">select</span> * <span class="keyword">from</span> akita_articles;
+</pre>
+  </body>
+</html>

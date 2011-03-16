@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ****************************************************** -->
+<!-- Copyright (c) 2006 - Berlin Brown -->
+<!-- Date: 4/1/2007 -->
+<!-- ****************************************************** -->
+<project name="Project" default="compile" basedir=".">
+
+	<property file="build.properties" />
+
+	<property name="build.dir"	       value="${basedir}/build" />
+	<property name="build.dir.classes" value="${basedir}/build/classes" />
+
+	<property name="scala.src.dir"	   value="${basedir}/src/scala" />
+	<property name="lib.dir"           value="${basedir}/../../syslib" />
+	<property name="jgap.dir"          value="${basedir}/../../jgap/lib/jgap" />
+
+	<target name="init" description="Initialization">
+		<tstamp />
+	</target>
+
+	<!-- Target: Prepare -->
+	<target name="prepare">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.dir.classes}"/>
+	</target>
+
+	<!-- Define the library files -->
+	<property name="scala-compiler.jar"  value="${lib.dir}/scala/2.7.3/scala-compiler.jar" />
+	<property name="scala-library.jar"   value="${lib.dir}/scala/2.7.3/scala-library.jar" />
+	<property name="scala-swing.jar"     value="${lib.dir}/scala/2.7.3/scala-swing.jar" />
+	<property name="jgap.jar"            value="${jgap.dir}/jgap.jar" />
+
+	<!-- Target: CLASSPATH -->
+	<path id="classpath">
+		<pathelement location="${scala-compiler.jar}" />
+		<pathelement location="${scala-library.jar}" />
+		<pathelement location="${scala-swing.jar}" />
+		<pathelement location="${jgap.jar}" />
+
+		<pathelement location="${build.dir.classes}" />
+	</path>
+
+	<path id="runtime.classpath">
+		<pathelement location="${build.dir}/${appname.jar}.jar" />
+	</path>
+
+	<taskdef resource="scala/tools/ant/antlib.xml">
+		<classpath refid="classpath" />
+	</taskdef>
+
+	<target name="compile" depends="prepare">
+		<scalac srcdir="${scala.src.dir}" destdir="${build.dir.classes}" 
+	  		classpathref="classpath" force="never">
+			<include name="**/*.scala"/>
+		</scalac>
+	</target>
+
+	<target name="java.compile" depends="prepare">
+		<javac deprecation="false"
+	                        debug="true"
+	                        srcdir="${basedir}/src/java"
+	                        destdir="${build.dir.classes}"
+	                        target="1.5"
+	                        includes="**/*.java">
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<target name="fast" depends="prepare">
+		<fsc srcdir="${scala.src.dir}" destdir="${build.dir.classes}" 
+		  		classpathref="classpath" force="never">
+			<include name="**/*.scala"/>
+		</fsc>
+	</target>
+
+
+	<!-- Build jar -->
+	<target name="package" depends="compile">
+		<jar jarfile="${build.dir}/${appname.jar}.jar">
+			<fileset dir="${build.dir.classes}">
+				<include name="**/*.class"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<!-- Run the application -->
+	<!-- Also see the JRE_HOME -->
+	<target name="run" depends="compile">
+		<java classname="org.bnode.genetics.MakeChange" fork="true">
+			<classpath refid="classpath"/>
+		</java>
+	</target>
+
+    <target name="java.run" depends="java.compile">
+	        <java classname="MinimizingMakeChange" fork="true">
+	            <classpath refid="classpath"/>
+	            <arg value="30" />
+	        </java>    	   
+   </target>
+	
+	<!-- Main Clean -->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+	<!-- End of Main Clean -->
+
+</project>
+<!-- End of the File -->

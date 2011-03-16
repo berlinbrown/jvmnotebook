@@ -1,0 +1,8 @@
+[16.04.2009 16:48:07,660] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set (depth 2)
+[16.04.2009 16:48:07,739] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set (depth 0)
+[16.04.2009 16:48:07,801] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set (depth 1)
+[16.04.2009 16:48:07,848] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set (depth 2)
+[16.04.2009 16:48:08,051] [main] INFO  org.jgap.gp.impl.GPGenotype  - Creating initial population
+[16.04.2009 16:48:08,051] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free: 6.1 MB
+[16.04.2009 16:48:08,051] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set (depth 2)
+[16.04.2009 16:48:08,082] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free after creating population: 6.1 MB

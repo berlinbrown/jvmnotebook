@@ -1,0 +1,22 @@
+#######################################
+# Berlin Brown - berlin dot brown at gmail.com
+#######################################
+
+Using tex/latex/tetex - generate documents/articles/books, etc
+
+For cygwin win32,
+
+You need ghostscript
+
+- Tex 
+- Perl
+
+
+Tetext - 3.0.0.3
+
+ghostscript - 8.63-2
+
+
+Tested: 1/12/2011
+
+CYGWIN_NT-5.1 student-paris 1.7.7(0.230/5/3) 2010-08-31 09:58 i686 Cygwin

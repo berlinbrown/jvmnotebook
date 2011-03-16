@@ -1,0 +1,22 @@
+
+Wikipedia Definition:
+http://en.wikipedia.org/wiki/Groovy_programming_language
+-----------------------------
+
+Groovy is an object-oriented programming language for the Java Platform 
+as an alternative to the Java programming language. It is a dynamic language 
+with features similar to those of Python, Ruby, Perl, and Smalltalk. 
+It can be used as a scripting language for the Java Platform.
+
+Groovy uses a Java-like curly bracket syntax which is dynamically compiled 
+to Java Virtual Machine bytecodes and which works seamlessly with other 
+Java code and libraries. The Groovy compiler can be used to generate standard 
+Java bytecode to be used by any Java project. Most Java code is valid Groovy syntax 
+and can be used dynamically as a scripting language.
+
+-----------------------------
+
+Resources:
+http://groovy.codehaus.org/Cookbook+Examples
+
+http://groovy.codehaus.org/

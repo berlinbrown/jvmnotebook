@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ======================================================  -->
+<!-- Berlin Brown                       -->
+<!--  $Id: build.xml,v 1.3 2005/02/21 16:39:19 bigbinc Exp $ -->
+<!-- ======================================================  -->
+<project name="RehabAnalysis-Proj" default="deploy" basedir=".">
+        
+	<!--.. Properties ............................................. -->	
+	<property file="ant.properties"/>
+		
+		<property name="final.name" value="${main.app.name}" />
+	
+  		<property name="final.jar" value="${final.name}.jar" />
+		<property name="final.war" value="${final.name}.war" />
+        
+        <property name="src.dir"   value="${basedir}/src" />
+        
+        <property name="build.dir" value="${basedir}/build" />
+        <property name="build.classes.dir" value="${basedir}/build/classes" />
+        
+        <!-- NOTE: change this from Y to W when in DEVELOPMENT -->
+        <property name="tomcat.home" value="${tomcat.deploy.dir}" />
+        <property name="tomcat.root" value="${tomcat.home}/webapps/ROOT" />
+        
+        <!-- Servlet Related Props -->
+        <!-- This will copy the folder gis to this directory -->
+        <property name="classes.deploy" value="${tomcat.root}/WEB-INF/classes" />
+                        
+        <!-- CLASSPATH Setting ========================================== -->
+        <path id="classpath">
+			<fileset dir="${basedir}/lib">
+				<include name="**/*.jar"/>
+			</fileset>
+        </path>
+        
+        <!-- PREPARE ==================================================== -->
+        <target name="prepare">
+                <mkdir dir="${build.dir}"/>
+                <mkdir dir="${build.classes.dir}"/>
+        	
+        		<!-- Make the web directories -->
+        		<mkdir dir="${build.dir}/web/WEB-INF/classes"/>
+        		<mkdir dir="${build.dir}/web/WEB-INF/lib"/>
+        </target>
+        
+        <!-- COMPILE ==================================================== -->
+        <target name="serv.prepare" depends="prepare">
+                <!-- Remember to restart tomcat -->
+                <javac srcdir="${src.dir}" destdir="${build.classes.dir}" includes="**">
+					<classpath refid="classpath"/>                          
+                </javac>        	
+        		<!-- These will get compiled to the WEB-INF directory -->
+        		<javac srcdir="${src.dir}" destdir="${build.dir}/web/WEB-INF/classes" includes="**">
+					<classpath refid="classpath"/>                          
+				</javac>
+        </target>                        
+        <target name="package" depends="serv.prepare">
+                <echo>Building Package</echo>
+        		        		        		
+        		<!-- Create a jar and a WAR -->
+        		<jar jarfile="${build.dir}/${final.jar}">
+					<fileset dir="${build.classes.dir}">
+						<include name="**/*.class"/>
+						<include name="**/*.xml"/>
+					</fileset>
+        		</jar>        	        		
+        </target>
+	
+    	<target name="deploy" depends="package">
+			<!-- Deploy *.class files to Tomcat -->
+    	</target>
+	
+		<!-- Test Cases -->
+		<target name="test" depends="package">
+			<java classname="${test.app.name}" fork="yes" dir=".">
+				<classpath refid="classpath"/>
+				<classpath>
+					<!-- <pathelement location="${basedir}/build/classes"/> -->
+					<pathelement location="${basedir}/build/${final.jar}"/> 
+				</classpath>				
+			</java>
+		</target>
+        
+        <!-- Time Stamp ================================================= -->
+        <tstamp>
+                <format property="current.time" pattern="MM-dd-yyyy-hh-mm" />
+        </tstamp>
+        <!-- End of the Time Stamp ====================================== -->
+  
+        <!-- Zip the Directory ========================================== -->
+        <target name="zip">
+        <zip destfile="${final.name}-${current.time}.zip"
+                       basedir="../${final.name}"
+                 />
+        </target>
+        <!-- End of Zip Directory -->
+        
+        <!-- Main Clean -->
+        <target name="clean">
+			<delete dir="${build.dir}" />
+			<delete>
+				<fileset dir="${basedir}">
+					<include name="*.zip"/>
+				</fileset>
+			</delete>
+   
+        </target>
+        <!-- End of Main Clean -->        
+</project>
+ 
+

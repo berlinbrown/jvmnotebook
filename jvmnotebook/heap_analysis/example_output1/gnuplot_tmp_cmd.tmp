@@ -1,0 +1,10 @@
+set terminal png
+set output 'image_gc_analysis.png'
+set title 'GC results'
+set size 1,1
+set key left top
+set autoscale
+set xlabel 'gc_iter'
+set ylabel 'gc_main_paus_time'
+plot 'image_gc_analysis.txt' using 1:6 title 'GC Results'
+

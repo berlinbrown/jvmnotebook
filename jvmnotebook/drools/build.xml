@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- **************************************************************** -->
+<!-- 
+     build.xml - build for octane server
+     Copyright (c) 2009 - Berlin Research, Botnode.com, Berlin Brown
+     Updated: 10/30/2009
+ -->
+<!-- **************************************************************** -->
+<project name="Build File" default="compile" basedir=".">
+
+    <property name="build.dir"          value="${basedir}/build" />
+    <property name="build.classes.dir"  value="${basedir}/build/classes" />	
+    <property name="src.dir"            value="${basedir}/src" />    
+    <property name="lib.dir"            value="${basedir}/lib" />
+	
+<target name="help" description="Initialization">
+	        <tstamp/>
+			<echo>
+ Additional Targets and Usage:
+ -----------------
+
+</echo>
+	</target>
+	
+    <path id="classpath">
+    	<pathelement location="${lib.dir}" />     	    	    	            	
+    	<pathelement location="${lib.dir}/drools-api-5.0.1.jar" />
+    	<pathelement location="${lib.dir}/drools-compiler-5.0.1.jar" />
+        <pathelement location="${lib.dir}/drools-core-5.0.1.jar" />
+    	<pathelement location="${lib.dir}/janino-2.5.15.jar" />
+    </path>
+	
+	<path id="classpath.rt">
+	        <pathelement location="${lib.dir}" />
+		    <pathelement location="${lib.dir}/drools-api-5.0.1.jar" />
+		    <pathelement location="${lib.dir}/drools-compiler-5.0.1.jar" />
+	        <pathelement location="${lib.dir}/drools-core-5.0.1.jar" />		    
+		    <pathelement location="${lib.dir}/mvel2-2.0.10.jar" />
+		    <pathelement location="${lib.dir}/joda-time-1.6.jar" />
+		    <pathelement location="${lib.dir}/drools-jsr94-5.0.1.jar" />
+	</path>
+
+    <!-- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; -->
+    <!-- Target: Prepare -->
+    <!-- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; -->
+    <target name="prepare" depends="help">
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${build.classes.dir}" />
+    	<mkdir dir="${build.classes.dir}/conf" />
+    </target>
+
+    <!-- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; -->
+    <!-- Target: Compile -->
+    <!-- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; -->
+    <target name="compile" depends="prepare">
+        <javac deprecation="true"
+        		verbose="false"
+        		debug="true"
+                target="1.5"
+                srcdir="${src.dir}"
+                destdir="${build.classes.dir}">
+        	<!-- Modify with the packages that need to be included
+        	     in the build -->
+        	<include name="org/**/*.java" />
+            <classpath refid="classpath"/>            
+        </javac>    	
+    </target>
+	    	
+    <!-- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; -->
+    <!-- Target: Run -->
+    <!-- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; -->
+    <target name="run" depends="compile">
+    	<java classname="org.berlin.rpg.app.MainRPG" fork="true">
+			<classpath refid="classpath" />
+			<classpath>
+				<pathelement location="${basedir}" />
+				<pathelement location="${build.classes.dir}" />
+			</classpath>    	            			           
+		</java>
+    </target>
+	
+    <target name="test" depends="compile">
+        <java classname="org.berlin.rpg.rules.Rules" fork="true">
+            <classpath refid="classpath.rt" />
+            <classpath>
+                <pathelement location="${basedir}" />
+                <pathelement location="${build.classes.dir}" />
+            </classpath>                                           
+        </java>
+    </target>   
+	
+	<!-- ************************************************************ -->
+    <!-- Target: Build -->
+    <!-- ************************************************************ -->
+    <target name="jar" depends="compile">
+    	<jar destfile="${build.dir}/simplerpg.jar">
+    	    <fileset dir="${build.classes.dir}" includes="**/*.class" />    		    		    	    	
+    		<manifest>
+    			<attribute name="Built-By" value="Berlin Brown (Ant 1.7.0)" />			
+				<attribute name="Implementation-Vendor"   value="Berlin Research" />
+				<attribute name="Implementation-Title"    value="Octane Server"   />
+				<attribute name="Implementation-Version"  value="0.6.20091030"    />
+			</manifest>
+		</jar>    		
+    </target>
+
+	<!-- ************************************************************ -->
+	<!-- Main Clean -->
+	<!-- ************************************************************ -->
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    </target>
+
+</project>

@@ -1,0 +1,87 @@
+#######################################
+# Berlin Brown - berlin dot brown at gmail.com
+#######################################
+
+Using tex/latex/tetex - generate documents/articles/books, etc
+
+For cygwin win32,
+
+You need ghostscript
+
+- Tex 
+- Perl
+
+Tetext - 3.0.0.3
+
+ghostscript - 8.63-2
+
+
+Tested: 1/12/2011
+
+CYGWIN_NT-5.1 student-paris 1.7.7(0.230/5/3) 2010-08-31 09:58 i686 Cygwin
+=====================
+
+More notes:
+
+----------
+
+Java Programming Notebook
+
+Book:
+
+A. Java
+A. Development with Eclipse
+A. Web Development (Wicket, Struts, JSF)
+A. Graphics Development
+A. OpenGL
+
+A. Data API
+
+JavaIO, JavaNIO
+
+B. Scala
+C. Clojure
+D. Groovy
+E. JRuby
+F. Functional Java Libraries
+
+
+- Regex expressions, web development.
+
+Libraries:
+
+- Wicket, Hibernate Spring, AspectJ, 
+- Terracotta, Lucene
+- Jeff Heatons Neural Network Library.
+- Charting libraries
+- Natural Language Toolkit
+- XHTMLRenderer (PDF output)
+- ASM, bytecode engineering.
+- JUnit.
+- Commons Collections
+
+- Google App Engine
+- Ant, Maven
+- Antlr
+- Look at Tomcat, Jetty, etc
+
+- Basic android apps
+- LambdaJ, Drools
+
+- Hadoop
+
+==========
+
+ More notes: sections in latex:
+ 
+ http://www.emerson.emory.edu/services/latex/latex_132.html
+ 
+    * \part
+    * \chapter (report style only)
+    * \section
+    * \subsection
+    * \subsubsection
+    * \paragraph
+    * \subparagraph
+    * \subsubparagraph (milstd and book-form styles only)
+    * \subsubsubparagraph (milstd and book-form styles only) 

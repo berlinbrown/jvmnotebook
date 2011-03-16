@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ****************************************************** -->
+<!-- Copyright (c) 2006 - Berlin Brown -->
+<!-- ****************************************************** -->
+<project name="OpenBotlist | Build ABCL Java Source" default="package" basedir=".">    
+    <property name="src.dir" value="${basedir}" />
+	<target name="init" description="Initialization">
+	        <tstamp/>	        
+	</target>	
+	
+    <!-- Target: Prepare -->
+    <target name="prepare" depends="init">
+    </target>
+
+    <!-- Target: Compile -->
+    <target name="compile" depends="prepare">
+        <javac deprecation="true"
+                target="1.5"
+                srcdir="${src.dir}"
+                destdir="${basedir}"
+                includes="**/*.java">            
+            <compilerarg value="-Xlint" />
+        </javac>
+    </target>
+	
+    <!-- Target: Build -->
+    <target name="package" depends="compile">
+    </target>
+      
+    <!-- Target: Tomcat.deploy -->
+    <target name="tomcat.deploy" depends="package">
+        <!-- Copy WEB-INF Classes Directory -->
+        <!-- With this build configuration, this assumes that the build script
+                    is located with the webapp directory -->
+        <copy todir="${basedir}/WEB-INF/classes">
+            <fileset dir="${basedir}/build/classes">
+                <include name="**"/>
+            </fileset>
+        </copy>
+        <!-- End of Target Tomcat Deploy -->
+    </target> 
+
+    <!-- Main Clean -->
+    <target name="clean">
+        <delete>        	
+            <fileset dir="${basedir}">
+                <include name="**/*.class" />                
+            </fileset>
+        </delete>
+    </target>
+    <!-- End of Main Clean -->
+    
+</project>
+<!-- End of the File -->

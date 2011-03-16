@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="ch.epfl.lamp.sdt.launching.SCALA_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry exported="true" kind="lib" path="webapp/wstockbot/WEB-INF/lib/servlet-api-2.5-20081211.jar"/>
+	<classpathentry exported="true" kind="lib" path="webapp/wstockbot/WEB-INF/lib/jetty-6.1.24.jar" sourcepath="E:/berlin_work/projects/downloads_main/downloads8/jetty-6.1.24-src/jetty-6.1.24"/>
+	<classpathentry exported="true" kind="lib" path="webapp/wstockbot/WEB-INF/lib/jetty-util-6.1.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="webapp/wstockbot/WEB-INF/lib/wicket-1.4.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="webapp/wstockbot/WEB-INF/lib/jetty-management-6.1.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="webapp/wstockbot/WEB-INF/lib/jetty-client-6.1.24.jar"/>
+	<classpathentry kind="output" path="webapp/wstockbot/WEB-INF/classes"/>
+</classpath>

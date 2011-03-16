@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.34 in css mode. -->
+<html>
+  <head>
+    <title>swing_example.lisp</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #000000;
+        background-color: #ffffff;
+      }
+      .builtin {
+        /* font-lock-builtin-face */
+        color: #da70d6;
+      }
+      .comment {
+        /* font-lock-comment-face */
+        color: #b22222;
+      }
+      .comment-delimiter {
+        /* font-lock-comment-delimiter-face */
+        color: #b22222;
+      }
+      .doc {
+        /* font-lock-doc-face */
+        color: #bc8f8f;
+      }
+      .function-name {
+        /* font-lock-function-name-face */
+        color: #0000ff;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #a020f0;
+      }
+      .string {
+        /* font-lock-string-face */
+        color: #bc8f8f;
+      }
+      .type {
+        /* font-lock-type-face */
+        color: #228b22;
+      }
+      .variable-name {
+        /* font-lock-variable-name-face */
+        color: #b8860b;
+      }
+
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+<span class="comment-delimiter">;;</span><span class="comment">################################################
+#|
+ swing_example.lisp  
+ Usage:
+ ABCL-PROMPT&gt;&gt;&gt; (load "swing_example.lisp")
+
+ Use with ABCL (known as Armed Bear Common Lisp)
+ Author: Berlin Brown &lt;berlin dot brown at gmail.com&gt;
+ Date: 4/15/2008
+ 
+ "The opposite of a correct statement is a false statement." -- Niels Bohr
+ 
+ *LICENSE* (new bsd license):
+ -----------------------
+ [2] http://www.opensource.org/licenses/bsd-license.php
+
+ *Short Overview*
+ ---------------
+ Swing Client View (an swing example implemented for ABCL lisp)
+
+ *Full Overview*
+ ---------------
+ I always have trouble finding the right tool to create simple, throw-away
+ UIs.  I created this code to launch a set of perl test scripts.  I needed basic
+ menu-item/button action handlers and a text-area to view and/or parse the incoming
+ text that would have normally been piped to standard output.
+
+ I ended up choosing common-lisp as opposed to python or ruby because the lisp syntax is 
+ just as light, and powerful a general purpose language; it is perfectly suited for my task.  
+ I commonly use emacs, so I am already equipped with an editor.  I decided to use Swing and ABCL for the 
+ UI toolkit, and for no real particular reason.  If I can create this UI using swing running on the JVM, 
+ it will be 100 times easier using another toolkit.  Plus, swing and the jvm is reliatively
+ portable.  In the future, I hope to convert this to a more portable MVC architecture.
+ This Swing widget creation code could operate as the view for a larger system and then I could
+ easily switch with another lisp gui toolkit library.
+
+ *Setup and Environment*
+ -----------------------
+ ABCL runs like any other java application.  Once, you compile the single jar and resource
+ bundled  *.cls lisp binary files, a script is available that you use to launch the ABCL main class:
+ 
+ org.armedbear.lisp.Main
+
+ You need a working java runtime and JDK (preferablly Sun's jre/jdk 1.5 or greater), 
+ a common lisp implementation (e.g. CMUCL, SBCL, or CLISP) and the ABCL package.
+ Download the latest ABCL from sourceforge [1] http://armedbear.org/abcl.html 
+ Any of the common lisp implemenations will work.  In the past, I have compiled 
+ ABCL on win32 cygwin with clisp and Ubuntu Linux with SBCL.  I didn't 
+ experience any issues.  You may have some trouble configuring the customization
+ file to point to your JDK.  I had to modify the script and just removed the operating
+ system detect code.
+
+ I added this to the buttom of the ABCL customizations.lisp file 
+ to override any pre-existing definitions:
+ (setq *jdk*           "C:\\Program Files\\Java\\jdk1.5.0_11\\")
+ (setq *java-compiler* "javac")
+ 
+ Follow the steps in the README file:
+ Start your common lisp implemenation and get to the lisp REPL prompt:
+
+ Load build-abcl.lisp:
+
+    (load "build-abcl.lisp")
+
+ Then do:
+
+    (build-abcl:build-abcl :clean t :full t)
+
+ Launch the ABCL startup script:
+ $$$ abcl.bat
+ 
+c:\projects\tools\home\projects\projects_ecl\botclient\botnetclient\lisp\ui\swin
+g&gt;org.armedbear.lisp.Main
+Armed Bear Common Lisp 0.0.10 (built Tue Apr 8 2008 12:43:18 -0500)
+Java 1.5.0_11 Sun Microsystems Inc.
+Java HotSpot(TM) Client VM
+Low-level initialization completed in 0.656 seconds.
+Startup completed in 2.171 seconds.
+Type ":help" for a list of available commands.
+
+CL-USER(1): (load "swing_example.lisp")
+
+ *Source Code*
+ ----------------------- 
+ This code can be a little hard to follow.  There is a lot of typing needed
+ to setup and instantiate the java classes or access the java fields.
+ So, I suggest you use lisp syntactic sugar to beautify and cleanup the example
+ and remember to send me your patches.
+
+ *Useful tests from the ABCL java test suite*
+ -----------------------
+ [a] Example to create an instance of a java object with the String constructor
+ -------------------
+ (deftest jnew.1
+  (let ((constructor (jconstructor "java.lang.String" "java.lang.String")))
+    (jclass-of (jnew constructor "foo")))
+  "java.lang.String"
+  "java.lang.String")
+
+ [b] Accessing the 'int' java primitive
+ -------------------
+ (deftest jclass-name.8
+  (jclass-name (jclass "int"))
+  "int")
+
+ [c] Invoking a java method.
+ -------------------
+ (deftest jclass.4
+  (let ((class1 (jcall (jmethod "java.lang.Object" "getClass") "foo"))
+        (class2 (jclass "java.lang.String")))
+    (jcall (jmethod "java.lang.Object" "equals" "java.lang.Object")
+           class1 class2))
+  t)
+
+ [d] 
+ -------------------
+ (deftest jclass.3
+  (equal (jclass '|java.lang.String|) (jclass "java.lang.String"))
+  t)
+
+ Example static method call "System.getenv('KEY')
+ (jstatic "getenv" (jclass "java.lang.System") "KEY")
+
+ Java Static Fields:
+ (jfield-raw "java.lang.Boolean" "TRUE")
+
+ *Synonymous java code (see the lisp function initTextAreaLayout)*:
+ ---------------------------------
+ I created a 100% java skeleton version to see how to transform that code to lisp.  Here is
+ some of the java source.
+
+ import java.awt.BorderLayout;
+ import java.awt.event.ActionEvent;
+ import javax.swing.AbstractAction;
+ import javax.swing.BoxLayout;
+ import javax.swing.JButton;
+ import javax.swing.JFrame;
+ import javax.swing.JMenu;
+ import javax.swing.JMenuBar;
+ import javax.swing.JMenuItem;
+ import javax.swing.JPanel;
+ import javax.swing.JScrollPane;
+ import javax.swing.JTextArea;
+ import javax.swing.JTextField;
+ import javax.swing.ScrollPaneConstants;
+ import javax.swing.UIManager;
+
+    private void initTextAreaLayout() {     
+        pathField = new JTextField(DEFAULT_PATH, 40);
+        final JPanel topPanel = new JPanel();       
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.add(pathField);
+            
+        final JPanel buttonPanel = new JPanel();        
+        this.readRequestsButton = new JButton("Run Action");
+        
+        buttonPanel.add(this.readRequestsButton);
+        topPanel.add(buttonPanel);
+            
+        contentArea = new JTextArea(25, 60);
+        JScrollPane scrollPane = new JScrollPane(contentArea,
+                        ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        
+        getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(topPanel, BorderLayout.NORTH);
+        getContentPane().add(scrollPane, BorderLayout.CENTER);
+    }
+
+ *Tested with JDK/JRE version*:
+ ---------------------------------
+ Java version "1.5.0_11"
+ Java(TM) 2 Runtime Environment, Standard Edition (build 1.5.0_11-b03)
+ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode)
+
+ *Thanks*
+ ---------------------------------
+ [2] Peter Graves - creator of ABCL
+
+--------------------------------------
+ ** ABCL Lisp Helpers **
+--------------------------------------
+ Example static method call "System.getenv('KEY')
+ (jstatic "getenv" (jclass "java.lang.System") "KEY")
+
+ Fields:
+ (jfield-raw "java.lang.Boolean" "TRUE")
+
+--------------------------------------
+ ** Useful Java Swing Constructors **
+ Also see: [3] http://java.sun.com/javase/6/docs/api/javax/swing/JPanel.html
+--------------------------------------
+
+ JTextField() / JTextField(String text, int columns)
+ JPanel()
+ JScrollPane() / JScrollPane(Component view) / JScrollPane(Component view, int vsbPolicy, int hsbPolicy)
+
+ *Notes*
+ [4] ABCL is not forgiving with passing the wrong type to a java method.  Make
+ sure the right type is passed to the right argument.  ABCL returns generic errors:
+
+ Debugger invoked on condition of type JAVA-EXCEPTION:
+ #&lt;JAVA-EXCEPTION {4654F6}&gt;
+
+ [5] I defined some constants and parameters at the top of the code to reduce
+ some redundant code. 
+
+ (defconstant j-string "java.lang.String")
+ 
+ (defparameter *new-jmenu-item* (jconstructor j-jmenuitem j-string))
+
+|#</span>
+<span class="comment-delimiter">;;</span><span class="comment">################################################
+</span>
+(<span class="keyword">defpackage</span> <span class="type">:swing-view</span>
+  (<span class="builtin">:use</span> <span class="builtin">:common-lisp</span> <span class="builtin">:java</span>))
+(<span class="keyword">in-package</span> <span class="builtin">:swing-view</span>)
+
+<span class="comment-delimiter">;;</span><span class="comment">----------------------------
+</span><span class="comment-delimiter">;; </span><span class="comment">** Java Class String Constant Definitions **
+</span><span class="comment-delimiter">;;</span><span class="comment">----------------------------
+</span>(<span class="keyword">defconstant</span> <span class="variable-name">*default-path*</span> <span class="string">"file://./latin_text.txt"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-string</span> <span class="string">"java.lang.String"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-component</span> <span class="string">"java.awt.Component"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-container</span> <span class="string">"java.awt.Container"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-layout-manager</span> <span class="string">"java.awt.LayoutManager"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-borderlayout</span> <span class="string">"java.awt.BorderLayout"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-actionevent</span> <span class="string">"java.awt.event.ActionEvent"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-abstractaction</span> <span class="string">"javax.swing.AbstractAction"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-boxlayout</span> <span class="string">"javax.swing.BoxLayout"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-jbutton</span> <span class="string">"javax.swing.JButton"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-jframe</span> <span class="string">"javax.swing.JFrame"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-jmenu</span> <span class="string">"javax.swing.JMenu"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-jmenubar</span> <span class="string">"javax.swing.JMenuBar"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-jmenuitem</span> <span class="string">"javax.swing.JMenuItem"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-jpanel</span> <span class="string">"javax.swing.JPanel"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-jscrollpane</span> <span class="string">"javax.swing.JScrollPane"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-jtextarea</span> <span class="string">"javax.swing.JTextArea"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-jtextfield</span> <span class="string">"javax.swing.JTextField"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-scrollpaneconstants</span> <span class="string">"javax.swing.ScrollPaneConstants"</span>)
+(<span class="keyword">defconstant</span> <span class="variable-name">j-uimanager</span> <span class="string">"javax.swing.UIManager"</span>)
+
+(<span class="keyword">defparameter</span> <span class="variable-name">*scroll-h-always*</span> (jfield-raw j-scrollpaneconstants 
+                                            <span class="string">"HORIZONTAL_SCROLLBAR_ALWAYS"</span>))
+(<span class="keyword">defparameter</span> <span class="variable-name">*scroll-v-always*</span> (jfield-raw j-scrollpaneconstants
+                                            <span class="string">"VERTICAL_SCROLLBAR_ALWAYS"</span>))
+
+(<span class="keyword">defparameter</span> <span class="variable-name">*bl-north*</span> (jfield j-borderlayout <span class="string">"NORTH"</span>)
+  <span class="string">"Definition for swing constants"</span>)
+(<span class="keyword">defparameter</span> <span class="variable-name">*bl-east*</span> (jfield j-borderlayout <span class="string">"EAST"</span>)
+  <span class="string">"Definition for swing constants"</span>)
+(<span class="keyword">defparameter</span> <span class="variable-name">*bl-center*</span> (jfield j-borderlayout <span class="string">"CENTER"</span>)
+  <span class="string">"Definition for swing constants"</span>)
+(<span class="keyword">defparameter</span> <span class="variable-name">*bl-west*</span> (jfield j-borderlayout <span class="string">"WEST"</span>)
+  <span class="string">"Definition for swing constants"</span>)
+(<span class="keyword">defparameter</span> <span class="variable-name">*bl-south*</span> (jfield j-borderlayout <span class="string">"SOUTH"</span>)
+  <span class="string">"Definition for swing constants"</span>)
+(<span class="keyword">defparameter</span> <span class="variable-name">*box-y-axis*</span> (jfield j-boxlayout <span class="string">"Y_AXIS"</span>)
+  <span class="string">"Definition for swing constants"</span>)
+(<span class="keyword">defparameter</span> <span class="variable-name">*box-x-axis*</span> (jfield j-boxlayout <span class="string">"X_AXIS"</span>)
+  <span class="string">"Definition for swing constants"</span>)
+
+<span class="comment-delimiter">;;</span><span class="comment">----------------------------
+</span><span class="comment-delimiter">;; </span><span class="comment">** Java method definitions **
+</span><span class="comment-delimiter">;;</span><span class="comment">----------------------------
+</span>(<span class="keyword">defparameter</span> <span class="variable-name">*method-set-layout*</span> 
+  (jmethod j-container <span class="string">"setLayout"</span> j-layout-manager))
+(<span class="keyword">defparameter</span> <span class="variable-name">*method-jmenu-add*</span> (jmethod j-jmenu <span class="string">"add"</span> j-jmenuitem))
+(<span class="keyword">defparameter</span> <span class="variable-name">*method-jpanel-add*</span> (jmethod j-jpanel <span class="string">"add"</span> j-component))
+(<span class="keyword">defparameter</span> <span class="variable-name">*method-container-add*</span> (jmethod j-container <span class="string">"add"</span> j-component))
+(<span class="keyword">defparameter</span> <span class="variable-name">*method-container-add-2*</span> (jmethod j-container <span class="string">"add"</span> 
+                                                j-component <span class="string">"java.lang.Object"</span>))
+
+<span class="comment-delimiter">;; </span><span class="comment">Java constructor definitions
+</span>(<span class="keyword">defparameter</span> <span class="variable-name">*new-jmenu-item*</span> (jconstructor j-jmenuitem j-string))
+(<span class="keyword">defparameter</span> <span class="variable-name">*new-scroll-pane*</span> 
+  (jconstructor j-jscrollpane j-component <span class="string">"int"</span> <span class="string">"int"</span>))
+(<span class="keyword">defparameter</span> <span class="variable-name">*new-scroll-pane-2*</span>  (jconstructor j-jscrollpane <span class="string">"int"</span> <span class="string">"int"</span>))
+(<span class="keyword">defparameter</span> <span class="variable-name">*new-textarea*</span> (jconstructor j-jtextarea <span class="string">"int"</span> <span class="string">"int"</span>))
+
+<span class="comment-delimiter">;;</span><span class="comment">----------------------------
+</span><span class="comment-delimiter">;; </span><span class="comment">Function implementations
+</span><span class="comment-delimiter">;;</span><span class="comment">----------------------------
+</span>(<span class="keyword">defun</span> <span class="function-name">j-true</span> () (make-immediate-object t <span class="builtin">:boolean</span>))
+(<span class="keyword">defun</span> <span class="function-name">j-false</span> () (make-immediate-object nil <span class="builtin">:boolean</span>))
+
+(<span class="keyword">defun</span> <span class="function-name">to-java-string</span> (s)
+  (jnew (jconstructor <span class="string">"java.lang.String"</span> <span class="string">"java.lang.String"</span>) s))
+
+(<span class="keyword">defun</span> <span class="function-name">init-swing</span> (jframe)
+  <span class="doc">"Define the frame properties. Add the button panel and menu"</span>
+  (<span class="keyword">progn</span> (setNativeLookUI)
+         (initTextAreaLayout (get-content-pane jframe))))
+
+(<span class="keyword">defun</span> <span class="function-name">get-content-pane</span> (jframe)
+  <span class="doc">"Translated to natural language: Using the instance of
+ the JFrame object called jframe, invoke the getContentPane method
+ and return an instance of the Container class"</span>
+  (jcall (jmethod j-jframe <span class="string">"getContentPane"</span>) jframe))
+
+(<span class="keyword">defun</span> <span class="function-name">new-borderlayout</span> ()
+  <span class="doc">"Create an instance of the border layout class"</span>
+  (jnew (jconstructor j-borderlayout)))
+
+(<span class="keyword">defun</span> <span class="function-name">new-box-layout</span> (panel axis)
+  (jnew (jconstructor j-boxlayout j-container <span class="string">"int"</span>) panel axis))
+
+(<span class="keyword">defun</span> <span class="function-name">path-textfield</span> ()
+  (jnew (jconstructor j-jtextfield j-string <span class="string">"int"</span>)
+        *default-path* 40))
+    
+(<span class="keyword">defun</span> <span class="function-name">initTextAreaLayout</span> (content-pane)
+  <span class="doc">"Attach the content text area widget and other components
+  @content-pane (java.awt.Container) - Container we are adding widgets
+  @see java.awt.Container"</span>
+  (<span class="keyword">let*</span> ((text-field (path-textfield))
+         (contentArea (jnew *new-textarea* 25 60 ))
+         (topPanel (jnew (jconstructor j-jpanel)))
+         (buttonPanel (jnew (jconstructor j-jpanel)))
+         (scrollPane (jnew *new-scroll-pane* contentArea 
+                           *scroll-v-always* *scroll-h-always*)))
+    (format t <span class="string">"INFO: content-pane obj:= [ ~a | ~a ]~%"</span> content-pane topPanel)
+    (jcall *method-set-layout* topPanel
+           (new-box-layout topPanel *box-y-axis*))
+    <span class="comment-delimiter">;; </span><span class="comment">Add TO the top panel; in java this will look like: topPanel.add(pathField)
+</span>    (jcall *method-jpanel-add* topPanel text-field)
+    (jcall *method-set-layout* content-pane (new-borderlayout))
+    (jcall *method-container-add-2* content-pane topPanel *bl-north*)
+    (jcall *method-container-add-2* content-pane scrollPane *bl-center*)))
+
+(<span class="keyword">defun</span> <span class="function-name">setNativeLookUI</span> ()
+  <span class="doc">"Use the operating system native UI look and feel, do not use the Swing oriented look"</span>
+  (jstatic <span class="string">"setLookAndFeel"</span>
+           (jclass j-uimanager)
+                   <span class="string">"com.sun.java.swing.plaf.windows.WindowsLookAndFeel"</span>))
+(<span class="keyword">defun</span> <span class="function-name">createReaderFrame</span> ()
+  <span class="doc">" Create the simple reader frame "</span>
+  (<span class="keyword">let</span> ((simpleFrame (jnew (jconstructor j-jframe))))
+    (init-swing simpleFrame)
+    (jcall (jmethod j-jframe <span class="string">"pack"</span>) simpleFrame)
+    (jcall (jmethod j-jframe <span class="string">"setVisible"</span> <span class="string">"boolean"</span>)
+           simpleFrame (j-true))))
+
+(<span class="keyword">defun</span> <span class="function-name">lisp-main</span> ()
+  <span class="doc">"Main entry point, create the jframe and attach the widget components then
+ start the jframe thread"</span>
+  (format t <span class="string">"INFO: creating panel objects~%"</span>)
+  (createReaderFrame))
+
+#+abcl
+(lisp-main)
+
+<span class="comment-delimiter">;;</span><span class="comment">################################################
+</span><span class="comment-delimiter">;; </span><span class="comment">End of Script
+</span><span class="comment-delimiter">;;</span><span class="comment">################################################</span></pre>
+  </body>
+</html>

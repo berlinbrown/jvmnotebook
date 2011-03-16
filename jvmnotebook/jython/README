@@ -1,0 +1,9 @@
+http://en.wikipedia.org/wiki/Jython
+------------------------------------
+Jython programs can seamlessly import and use any Java class. 
+Except for some standard modules, Jython programs use Java classes instead of Python modules. 
+Jython includes almost all of the modules in the standard Python programming language distribution, 
+lacking only some of the modules implemented originally in C. 
+For example, a user interface in Jython would be written with Swing, AWT or SWT. 
+Jython compiles to Java bytecode (intermediate language) either on demand or statically.
+------------------------------------

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ****************************************************** -->
+<!-- Copyright (c) 2006 - Berlin Brown -->
+<!-- Date: 4/1/2007 -->
+<!-- ****************************************************** -->
+<project name="Project" default="compile" basedir=".">
+
+	<property file="build.properties" />
+
+	<property name="build.dir"	       value="${basedir}/build" />
+	<property name="build.dir.classes" value="${basedir}/build/classes" />
+
+	<property name="lib.dir"           value="${basedir}/../../syslib" />
+	<property name="jgap.dir"          value="${basedir}/.." />
+
+	<target name="init" description="Initialization">
+		<tstamp />
+	</target>
+
+	<!-- Target: Prepare -->
+	<target name="prepare">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.dir.classes}"/>
+	</target>
+
+	<!-- Define the library files -->
+	<property name="jgap.jar"  value="${basedir}/../jgap.jar" />
+
+	<!-- Target: CLASSPATH -->
+	<path id="classpath">
+		<pathelement location="${jgap.jar}" />
+		<pathelement location="${basedir}/../lib/commons-logging.jar" />
+		<pathelement location="${basedir}/../lib/log4j.jar" />
+		<pathelement location="${build.dir.classes}" />
+	</path>
+
+	<path id="runtime.classpath">
+		<pathelement location="${build.dir}/${appname.jar}.jar" />
+	</path>
+
+	<target name="compile" depends="prepare">
+		<javac deprecation="false"
+	                        debug="true"
+	                        srcdir="${basedir}/src"
+	                        destdir="${build.dir.classes}"
+	                        target="1.5">
+			<include name="examples/simpleBoolean/**/*.java" />
+			<include name="examples/simpleBooleanThreaded/**/*.java" />
+			<include name="examples/salesman/**/*.java" />
+			<include name="examples/config/**/*.java" />
+			<include name="examples/gp/*.java" />
+			<include name="examples/knapsack/*.java" />
+			<include name="examples/*.java" />
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<target name="run" depends="compile">
+		<java classname="examples.MinimizingMakeChange" fork="true">
+			<classpath refid="classpath"/>
+			<arg value="30" />
+		</java>
+	</target>
+
+	<target name="run.gp" depends="compile">
+		<java classname="examples.gp.Fibonacci" fork="true">
+			<classpath refid="classpath"/>
+			<arg value="30" />
+		</java>
+	</target>
+
+	<target name="run.knap" depends="compile">
+			<java classname="examples.knapsack.KnapsackMain" fork="true">
+				<classpath refid="classpath"/>
+				<arg value="30" />
+			</java>
+	</target>
+	
+	<target name="run.salesman" depends="compile">
+			<java classname="examples.salesman.TravellingSalesman" fork="true">
+				<classpath refid="classpath"/>
+				<arg value="30" />
+			</java>
+	</target>
+	
+	<target name="run.config" depends="compile">
+			<java classname="examples.config.MaximizingFunction" fork="true">
+				<classpath refid="classpath"/>
+				<arg value="30" />
+			</java>
+	</target>
+	
+	
+	<!-- Main Clean -->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+	<!-- End of Main Clean -->
+
+</project>
+<!-- End of the File -->

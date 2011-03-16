@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+<struts-config>
+<!-- ================================================ Form Bean Definitions -->
+
+    <form-beans> 
+		<form-bean 
+				name="userLinksForm" type="org.spirit.forms.UserLinksForm">
+			<display-name>userLinksForm</display-name>
+		</form-bean>
+    </form-beans>
+
+<!-- ========================================= Global Exception Definitions -->
+
+    <global-exceptions>
+        <!-- sample exception handler
+        <exception
+            key="expired.password"
+            type="app.ExpiredPasswordException"
+            path="/changePassword.jsp"/>
+        end sample -->
+    </global-exceptions>
+
+<!-- =========================================== Global Forward Definitions -->
+
+    <global-forwards>
+        <!-- Default forward to "Welcome" action -->
+        <!-- Demonstrates using index.jsp to forward -->
+        <forward
+            name="welcome"
+            path="/Welcome.do"/>                     
+    </global-forwards>
+
+<!-- =========================================== Action Mapping Definitions -->
+
+    <action-mappings>
+            <!-- Default "Welcome" action -->
+            <!-- Forwards to Welcome.jsp -->
+        <action
+            path="/Welcome"
+            forward="/pages/Welcome.jsp"/>
+		<action
+            path="/Entry"
+            forward="/pages/Entry.jsp"/>		
+		<action
+            path="/Confirm"
+            forward="/pages/Confirm.jsp"/>
+				
+		<action path="/actions/simple"
+			name="userLinksForm"
+			parameter="/actions/simple"			
+			type="org.spirit.actions.DefaultActionHandler">
+			<forward name="success" path="/pages/Confirm.jsp" />
+		</action>
+		
+		<action path="/actions/listlinks"
+			name="userLinksForm"
+			parameter="/actions/listlinks"			
+			type="org.spirit.actions.DefaultActionHandler">
+			<forward name="success" path="/pages/ListLinks.jsp" />
+		</action>
+		
+		<action path="/actions/view"
+			name="userLinksForm"
+			parameter="/actions/view"			
+			type="org.spirit.actions.DefaultActionHandler">
+			<forward name="success" path="/pages/View.jsp" />
+		</action>
+		
+		<action path="/actions/edit"
+			name="userLinksForm"
+			parameter="/actions/edit"			
+			type="org.spirit.actions.DefaultActionHandler">
+			<forward name="success" path="/pages/Edit.jsp" />
+		</action>
+		<action path="/actions/editupdate"
+			name="userLinksForm"
+			parameter="/actions/editupdate"			
+			type="org.spirit.actions.DefaultActionHandler">
+			<forward name="success" path="/pages/EditConfirm.jsp" />
+		</action>
+		
+		<action path="/actions/delete"
+			name="userLinksForm"
+			parameter="/actions/delete"			
+			type="org.spirit.actions.DefaultActionHandler">
+			<forward name="success" path="/pages/Delete.jsp" />
+		</action>				
+    </action-mappings>
+
+	<!-- Message Resources -->	
+	<message-resources parameter="MessageResources" /> 
+	<message-resources parameter="org.spirit.resources.MessageResources">
+	</message-resources>
+  
+  <!-- Valdator Plugin -->
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property
+        property="pathnames"
+        value="/org/apache/struts/validator/validator-rules.xml,
+               /WEB-INF/validation.xml"/>
+  </plug-in>
+  
+  <!-- Jython Init Plugin -->
+  <plug-in className="org.spirit.util.JythonUtilPlugin">
+		<set-property property="configFile"
+		   value="/hibernate.cfg.xml"/>
+  </plug-in>
+  
+  <plug-in className="org.spirit.util.HibernateUtilPlugin">
+   <set-property property="configFile" value="/hibernate.cfg.xml"/>
+  </plug-in>
+  
+  <!-- End of the Struts Config -->
+</struts-config>
+

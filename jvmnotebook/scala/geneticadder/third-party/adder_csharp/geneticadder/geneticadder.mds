@@ -1,0 +1,16 @@
+<Combine name="geneticadder" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="geneticadder" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="geneticadder" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="geneticadder" single="True">
+    <Execute type="None" entry="geneticadder" />
+  </StartMode>
+  <Entries>
+    <Entry filename="geneticadder/geneticadder.mdp" />
+  </Entries>
+</Combine>

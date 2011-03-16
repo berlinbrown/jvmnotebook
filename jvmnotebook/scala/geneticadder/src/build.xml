@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ****************************************************** -->
+<!-- Copyright (c) 2006 - Berlin Brown -->
+<!-- Date: 4/1/2007 -->
+<!-- ****************************************************** -->
+<project name="Project" default="compile" basedir=".">
+		
+	<property file="build.properties" />
+			
+	<property name="build.dir"	       value="${basedir}/build" />
+	<property name="build.dir.classes" value="${basedir}/build/classes" />
+		
+	<property name="lib.dir"        value="${basedir}/../../syslib" />	
+	
+	<target name="init" description="Initialization">
+		<tstamp />
+	</target>
+
+	<!-- Target: Prepare -->
+	<target name="prepare">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.dir.classes}"/>
+	</target>
+
+
+	<!-- Target: CLASSPATH -->
+	<path id="classpath">
+		<pathelement location="${basedir}/lib/junit-4.6.jar" />
+		<pathelement location="${build.dir.classes}" />
+	</path>
+	
+	<path id="runtime.classpath">
+		<pathelement location="${build.dir}/${appname.jar}.jar" />
+	</path>
+	
+	<target name="compile" depends="prepare">
+		 <javac 
+		    debug="true"
+		    srcdir="${basedir}/java"		 	 
+		    destdir="${build.dir.classes}"
+		    classpathref="classpath">
+		 	  <compilerarg value="-Xlint"/>
+		  </javac> 
+	</target>
+
+	<!-- Build jar -->
+	<target name="package" depends="compile">
+		<jar jarfile="${build.dir}/${appname.jar}.jar">
+			<fileset dir="${build.dir.classes}">
+				<include name="**/*.class"/>
+			</fileset>
+		</jar>
+	</target>
+	
+	<!-- Run the application -->
+	<!-- Also see the JRE_HOME -->
+	<target name="run" depends="compile">
+		<java classname="org.adder.AdderMain" fork="false">			
+			<classpath refid="classpath"/>					
+		</java>
+	</target>
+	
+	<target name="test" depends="compile">
+	        <java classname="org.adder.test.AdderTestSuite" fork="false">         
+	            <classpath refid="classpath"/>                  
+	        </java>
+	    </target>
+		
+	<!-- Main Clean -->
+	<target name="clean">
+		<delete dir="${build.dir}" />		
+	</target>
+	<!-- End of Main Clean -->
+	
+</project>
+<!-- End of the File -->

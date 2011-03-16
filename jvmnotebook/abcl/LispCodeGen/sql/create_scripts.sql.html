@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.16 in css mode. -->
+<html>
+  <head>
+    <title>create_scripts.sql</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #000000;
+        background-color: #ffffff;
+      }
+      .comment {
+        /* font-lock-comment-face */
+        color: #b22222;
+      }
+      .function-name {
+        /* font-lock-function-name-face */
+        color: #0000ff;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #a020f0;
+      }
+      .string {
+        /* font-lock-string-face */
+        color: #bc8f8f;
+      }
+      .type {
+        /* font-lock-type-face */
+        color: #228b22;
+      }
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+<span class="comment">/**
+ * Berlin Brown
+ *
+ * MySQL oriented database creation scripts
+ * prefix = akita_
+ *
+ * 1. akita_category
+ * 2. pages
+ * 3. articles
+ * 4. source_modules
+ * 5. images
+ * 6. tags
+ * 7. links
+ * 8. comments
+ * 9. users
+ * 10. color_schema
+ * 11. styles
+ */</span>
+
+<span class="comment">/**
+ *  A category contains main pages.  An example category might include
+ * pages related to java development
+ */</span>
+<span class="keyword">CREATE</span> <span class="keyword">TABLE</span> akita_category(
+ obj_id                 <span class="type">INT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,
+ name                   VARCHAR(128) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,
+ title_html             VARCHAR(255),
+ description    TEXT,
+ date_added             DATETIME <span class="keyword">DEFAULT</span> <span class="string">'0000-00-00 00:00:00'</span>,
+ author_id              <span class="type">INT</span>(11),
+ status                 VARCHAR(20),
+ <span class="function-name">PRIMARY</span> <span class="function-name">KEY</span>    (obj_id)
+);
+
+<span class="keyword">CREATE</span> <span class="keyword">TABLE</span>  akita_pages(
+ obj_id                 <span class="type">INT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,
+ category_id    <span class="type">INT</span>(11) UNSIGNED,
+ name                   VARCHAR(128),
+ title_html             VARCHAR(255),
+ description    TEXT,
+ date_added             DATETIME <span class="keyword">DEFAULT</span> <span class="string">'0000-00-00 00:00:00'</span>,
+ author_id              <span class="type">INT</span>(11),
+ status                 VARCHAR(20),
+ <span class="function-name">PRIMARY</span> <span class="function-name">KEY</span>    (obj_id)
+);
+
+<span class="comment">/** bug = category_id should be page_id */</span>
+<span class="keyword">CREATE</span> <span class="keyword">TABLE</span>  akita_articles(
+ obj_id                 <span class="type">INT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,
+ page_id                <span class="type">INT</span>(11) UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span>,
+ name                   VARCHAR(128),
+ title_html             VARCHAR(255),
+ description    TEXT,
+ date_added             DATETIME <span class="keyword">DEFAULT</span> <span class="string">'0000-00-00 00:00:00'</span>,
+ author_id              <span class="type">INT</span>(11),
+ status                 VARCHAR(20),
+ body_text              TEXT,
+ size_bytes             <span class="type">int</span>(11),
+ <span class="function-name">PRIMARY</span> <span class="function-name">KEY</span>    (obj_id)
+);
+
+<span class="keyword">CREATE</span> <span class="keyword">TABLE</span>  akita_source_modules(
+ obj_id                 <span class="type">INT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,
+ article_id             <span class="type">INT</span>(11) UNSIGNED,
+ name                   VARCHAR(128),
+ description    TEXT,
+ date_added             DATETIME <span class="keyword">DEFAULT</span> <span class="string">'0000-00-00 00:00:00'</span>,
+ lines_source   <span class="type">INT</span>(11),
+ body                   TEXT,
+ <span class="function-name">PRIMARY</span> <span class="function-name">KEY</span>    (obj_id)
+);
+
+<span class="keyword">CREATE</span> <span class="keyword">TABLE</span>  akita_images(
+ obj_id                 <span class="type">INT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,
+ filename               VARCHAR(255),
+ article_id             <span class="type">INT</span>(11) UNSIGNED,
+ type                   VARCHAR(20),
+ <span class="function-name">PRIMARY</span> <span class="function-name">KEY</span>    (obj_id)
+);
+
+<span class="keyword">CREATE</span> <span class="keyword">TABLE</span>  akita_tags(
+ obj_id                 <span class="type">INT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,
+ article_id             <span class="type">INT</span>(11) UNSIGNED,
+ value                  VARCHAR(40),
+ type                   VARCHAR(20),
+ <span class="function-name">PRIMARY</span> <span class="function-name">KEY</span>    (obj_id)
+);
+
+<span class="keyword">CREATE</span> <span class="keyword">TABLE</span>  akita_links(
+ obj_id                 <span class="type">INT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,
+ article_id             <span class="type">INT</span>(11),
+ url                    TEXT,
+ link_descr             VARCHAR(255),
+ type                   VARCHAR(20),
+ <span class="function-name">PRIMARY</span> <span class="function-name">KEY</span>    (obj_id)
+);
+
+<span class="keyword">CREATE</span> <span class="keyword">TABLE</span>  akita_comments(
+ obj_id                 <span class="type">INT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,
+ article_id             <span class="type">INT</span>(11) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,
+ date_added             DATETIME <span class="keyword">DEFAULT</span> <span class="string">'0000-00-00 00:00:00'</span>,
+ body                   TEXT,
+ size_bytes             <span class="type">INT</span>(11),
+ author_id              <span class="type">INT</span>(11),
+ <span class="function-name">PRIMARY</span> <span class="function-name">KEY</span>    (obj_id)
+);
+
+<span class="keyword">CREATE</span> <span class="keyword">TABLE</span>  akita_users(
+ obj_id                 <span class="type">INT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,
+ date_added             DATETIME <span class="keyword">DEFAULT</span> <span class="string">'0000-00-00 00:00:00'</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,
+ user_name              VARCHAR(255) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,
+ email                  VARCHAR(255),
+ profile                TEXT,
+ url                    TEXT,
+ karma                  <span class="type">INT</span>(11),
+ <span class="keyword">UNIQUE</span>                 user_name (user_name),
+ <span class="function-name">PRIMARY</span> <span class="function-name">KEY</span>    (obj_id)
+);
+
+<span class="comment">/**
+ * A schema will have multiple styles, styles
+ */</span>
+<span class="keyword">CREATE</span> <span class="keyword">TABLE</span>  akita_color_schema(
+ obj_id                 <span class="type">INT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,
+ name                   VARCHAR(255) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,
+ type                   VARCHAR(40),
+ <span class="function-name">PRIMARY</span> <span class="function-name">KEY</span>    (obj_id)
+);
+
+<span class="comment">/**
+ * A schema will have many styles
+ */</span>
+<span class="keyword">CREATE</span> <span class="keyword">TABLE</span>  akita_styles(
+ obj_id                 <span class="type">INT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,
+ schema_id              <span class="type">INT</span>(11) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,
+ style_name             VARCHAR(255) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,
+ type                   VARCHAR(40),
+ value                  TEXT <span class="keyword">NOT</span> <span class="keyword">NULL</span>,
+ <span class="function-name">PRIMARY</span> <span class="function-name">KEY</span>    (obj_id)
+);
+
+<span class="function-name">commit</span>;
+show tables;
+</pre>
+  </body>
+</html>

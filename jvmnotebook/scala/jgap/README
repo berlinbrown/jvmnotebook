@@ -1,0 +1,17 @@
+##
+## Example using jgap and scala
+##
+
+Tested with Scala libraries:
+
+Snippet from the build.xml:
+
+<property name="scala-compiler.jar"  value="${lib.dir}/scala/2.7.3/scala-compiler.jar" />
+<property name="scala-library.jar"   value="${lib.dir}/scala/2.7.3/scala-library.jar" />
+<property name="scala-swing.jar"     value="${lib.dir}/scala/2.7.3/scala-swing.jar" />
+<property name="jgap.jar"            value="${jgap.dir}/jgap.jar" />
+
+On JGap:
+
+http://jgap.sourceforge.net/
+The latest release of JGAP is version 3.4.3

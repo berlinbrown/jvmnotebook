@@ -1,0 +1,129 @@
+<html><body>
+<h1>Demo ABCL servlet</h1>
+<p>this is a small demo servlet made with Armed Bear Common Lisp</p>
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#framework">Framework</a></li>
+<li></li>
+</ul>
+
+<a name="installation"/>
+<h3>Installation</h3>
+<p>You need some Java servlet container to run this servlet, for example, Apache Jakarta Tomcat.
+When servlet container is working, this web application should be copied in webapps directory, just
+like any other (possibly some configuration of servlet container is also required to launch it). 
+When it's ready, it's headpage should be accessible at http://localhost:8080/demosvlet/LspExec.
+</p>
+<p>ABCL itself is not included in this package. You should either build it youself, or 
+take pre-built one. When you have abcl.jar (or whatever), just copy it to demosvlet/WEB-INF/lib directory.
+</p>
+<p>Debugging support requires some emacs or xemacs and recent version of SLIME (SLIME version
+should support current ABCL, version in CVS at 06.06.05 supports ABCL 0.0.5). Check first that
+installation of SLIME works with ABCL. Then point path to swank-loader.lisp in WEB-INF/lisp/dbgrstart.lisp
+to the directory you've installed SLIME in. Then try to start debugger servlet at
+http://localhost:8080/demosvlet/LspDebug. When it shows it's form (where you can enter some
+lisp forms to be evaluated -- this is most primitive 'debugger'), you can load your emacs
+and issue slime-connect command. At this point SLIME should connect to the ABCL running in servlet, 
+so top-level prompt will appear where you can enter commands and debug servlets.<br/>
+If you need debugging, first launch LspDebug, then connect to it, and only then launch LspExec.
+You will see messages of loading servlet in repl window, and if something goes wrong with 
+loading servlet, you can fix them and use restarts in debugger.
+</p>
+<p>If you uncomment &lt;load-on-startup&gt; tag in WEB-INF/web.xml, you can automatically launch
+either debug
+</p>
+<p>I've tested this in two different configurations: Windows XP Prof with Tomcat 5 and
+Solaris 10 x86 with Tomcat 4. Under WinXP it works as is, under Solaris i had some problems
+with ABCL compiler -- Java is unable to create temporary file.
+In this case substitute line in Extensions.java 
+<pre>
+File file = File.createTempFile("abcl", null, null);
+</pre>
+with 
+<pre>
+File file = File.createTempFile("abcl", null, new File("/tmp/"));
+</pre>
+(it is in the end of file in implementation of function make-temp-file).
+I have no clue if this problem exists in other installations and under other
+unix-like systems like Linux.</p>
+<a name="architecture"/>
+<h3>Architecture</h3>
+<p>Bridge between Java servlets and Lisp is done in two Java classes implementing servlets -- LspExec
+and LspDebug. LspExec initializes Lisp interpreter, loads startup file (servlet-loader.lisp)
+and then looks for variable cl-user::*servlet*. If it exists, its content is treated like an object
+implementing javax.servlet.Servlet interface. When requests arrive, LspExec just forwards calls to
+this object's functions.<br/>
+LspDebug is a some debugging interface. It displays form that allows to execute forms like in REPL.
+Also, it loads SLIME and launches it's server. When SLIME is loaded, LspExec uses it's debugger
+hooks so it's possible to debug servlets in emacs.
+</p>
+<p>From Lisp side, structure is quite complex too.<br/>
+LspExec loads servlet-loader.lisp at startup. It loads required libraries (asdf, jfli-abcl and 
+lml2) and tries loading servlet.lisp. It installs abort and retry restarts, so if there
+are some problems loading servlet (for example, one of files are incompilable), it's possible to
+fix problem and retry. servlet.lisp creates SERVLET1 package, imports required Java classes
+and loads files of servlet framework.
+</p>
+<a name="framework"/>
+<h3>Framework</h3>
+<p>Historically, at first servlet was used in simple model-view-controller style of work.
+So, there were just three functions: analyze-request, process-request and generate-output.
+Then continuations were used on top of this layer -- process-request function was not used anymore,
+analyze-request decoded continuation and form parameters and generate-output called that continuation.
+<p>servlet.lisp defines general entry functions --  analyze-request, process-request and generate-output,
+that are provided by application itself. This functions are called in required order on Servlet.service function.
+servlet.lisp also loads code of CPS-transform (code by Marco Baringer) and application code.
+</p>
+<p>app.lisp implements analyze-page and generate-output functions. analyze-page grabs 
+form parameters in plist and finds out continuation id. generate-output function then
+checks whether continuation exists. if it does, it is called with plist of form parameters, 
+that are prepended with 'verb' -- special parameter that identifies form. If continuation is 
+not present, it calls entry function (go-front-page) (from app-logic.lisp).
+</p>app-logic.lisp implements application logic. functions there are defines with defun/cc, that
+means that they are specially instrumented to be used with continuations.
+When some form should be displayed, they call page-generator functions from app-pages.lisp.
+That page-generators (called gen-xxx-page typically) store current continuation in continuations
+table and generate form output, then they exit -- entirely from application logic section.
+When user provides input to form, continuation is called so plist of form parameters become 
+the return of gen-xxx-page function. There are three useful macros to destructure such list in app-logic.lisp.
+<ul><li>First is vcase. It simply selects statements based on form verb ('verb' is used for
+form identification, it's name specified in hidden input field). For example,
+<pre>
+(vcase (gen-user-menu-page username)
+			 (:add-numbers (numbers-op '+))
+			 (:mul-numbers (numbers-op '*))
+			 (:exit (return))
+</pre>
+</li>
+<li>vbind ignores verb, but it binds form parameters to variable. It distinguished string
+variables from integers. For example
+<pre>
+(vbind (gen-student-list-page)
+	((int student-id) password)
+	(list student-id password))
+</pre>
+</li>
+<li>vcase-bind is a combination of vcase and vbind. Depending on verb parameter, it 
+destructures different parameters:
+<pre>
+(vcase-bind  (gen-student-main-menu-page student)
+	 (:view-lecture ((int lecture-id))
+			(show-lecture lecture-id))
+	 (:start-test ((int test-id))
+		      (show-student-test student test-id))
+	 (:start-practice () (practical-task student section))
+</pre>
+</ul>
+</p>
+<p>app-pages.lisp contains function that generate html pages with help of lml2.
+make-page macro automatically generates page prologue and stores continuation in table.
+Special variable *cc-id* contain identifier of current continuation. It is automatically
+appended to all forms that are created with verb-form macro. Special variable value is
+somehow lost in functions that are not defines with defun/cc, so it's explicitly passed there.</p>
+<p>cont.lisp is just an implementation of storage for continuation closures</p>
+
+
+
+              
+</body></html>

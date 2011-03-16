@@ -1,0 +1,145 @@
+.IVS
+{
+    BORDER-RIGHT: 0px;
+    BORDER-TOP: 0px;
+    BORDER-LEFT: 0px;
+    BORDER-BOTTOM: 0px
+}
+A:link
+{
+    COLOR: mediumblue;
+    TEXT-DECORATION: none
+}
+A:visited
+{
+    COLOR: darkblue
+}
+A:active
+{
+    COLOR: #6633ff
+}
+A:hover
+{
+    COLOR: #0066ff
+}
+H1
+{
+    COLOR: darkblue;
+    FONT-FAMILY: 'Times New Roman'
+}
+H3
+{
+    COLOR: steelblue
+}
+HR
+{
+    COLOR: #3f0273;
+    HEIGHT: 1px
+}
+.nopadding
+{
+    BORDER-RIGHT: 0px;
+    PADDING-RIGHT: 0px;
+    BORDER-TOP: 0px;
+    PADDING-LEFT: 0px;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    OVERFLOW: visible;
+    BORDER-LEFT: 0px;
+    PADDING-TOP: 0px;
+    BORDER-BOTTOM: 0px
+}
+BODY
+{
+    SCROLLBAR-FACE-COLOR: #ccccdd;
+    FONT-SIZE: 100%;
+    PADDING-BOTTOM: 0px;
+    SCROLLBAR-HIGHLIGHT-COLOR: #eeeeff;
+    SCROLLBAR-SHADOW-COLOR: #aaaabb;
+    COLOR: black;
+    SCROLLBAR-3DLIGHT-COLOR: #eeeeff;
+    SCROLLBAR-ARROW-COLOR: #aaaaff;
+    SCROLLBAR-TRACK-COLOR: #ababab;
+    FONT-FAMILY: Verdana;
+    SCROLLBAR-DARKSHADOW-COLOR: #aaaabb;
+    BACKGROUND-COLOR: #efefef
+}
+INPUT
+{
+    BORDER-RIGHT: silver thin groove;
+    PADDING-RIGHT: 0px;
+    BORDER-TOP: silver thin groove;
+    PADDING-LEFT: 0px;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    BORDER-LEFT: silver thin groove;
+    COLOR: darkblue;
+    TEXT-INDENT: 0px;
+    PADDING-TOP: 0px;
+    BORDER-BOTTOM: silver thin groove;
+    BACKGROUND-COLOR: #dedede;
+    TEXT-ALIGN: center
+}
+SELECT
+{
+    BORDER-RIGHT: silver thin groove;
+    BORDER-TOP: silver thin groove;
+    BORDER-LEFT: silver thin groove;
+    COLOR: black;
+    BORDER-BOTTOM: silver thin groove;
+    BACKGROUND-COLOR: #dedede
+}
+H2
+{
+    COLOR: mediumblue
+}
+TABLE
+{
+    COLOR: #000000;
+    BACKGROUND-COLOR: #efefef
+}
+
+
+TH
+{
+	FONT-FAMILY: 'Arial';
+	FONT-WEIGHT: 600;
+	
+}
+
+.large {
+    FONT-SIZE: larger
+}
+.RED
+{
+    COLOR: #d6a213
+}
+.GREEN
+{
+    COLOR: #559933
+}
+
+.SELINPUT
+{
+    BORDER-RIGHT: silver thin groove;
+    PADDING-RIGHT: 0px;
+    BORDER-TOP: silver thin groove;
+    PADDING-LEFT: 0px;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    BORDER-LEFT: silver thin groove;
+    COLOR: darkblue;
+    TEXT-INDENT: 0px;
+    PADDING-TOP: 0px;
+    BORDER-BOTTOM: silver thin groove;
+    BACKGROUND-COLOR: #aebede;
+    TEXT-ALIGN: center
+}
+.IndirectGroup
+{
+    FONT-WEIGHT: bolder;
+    FONT-SIZE: xx-small;
+    COLOR: mediumblue;
+    TEXT-ALIGN: center;
+    TEXT-DECORATION: none
+}

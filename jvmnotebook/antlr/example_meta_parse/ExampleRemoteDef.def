@@ -1,0 +1,39 @@
+//*************************************
+// Example Remote Def File
+// Date: 12/27/2007
+//
+// The root namespace is separated by
+// the open and close parens ( <DATA> )
+//
+// Attributes are defined with  @attr: val;
+// Sub hash data structures are defined by
+// ID { <DATA> }
+//
+// Data payloads (String Content) is enclosed
+// between <<< and >>> tags.
+//*************************************
+(@remoteid: blah;
+ @remotekey: thekey;
+ @remotedef-vers: 1;
+ @remotedef-descr: Botlist_Remote_Def_Meta_Format;
+ ----
+.operation { @action: update-description;
+	     @action-id: 4442323;
+	     @sysid: 555;
+	     @objid: 3334343;
+	<<<Data (payload)>>>
+	}
+.operation { @action: update-description;
+	     @action-id: 444342442;
+	     @sysid: 12;
+	     @objid: 33332323;
+	<<<Data (payload)>>>
+	}
+.operation { @action: submit-link;
+	     @action-id: 444342442;
+	     @sysid: 12;
+	     @objid: 33332323;
+	     @strip: true;
+	<<<http://www.test.com/>>>
+	}
+)

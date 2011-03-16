@@ -1,0 +1,120 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Berlin Brown - berlin dot brown at gmail.com
+%% AI Notebook
+%% Date: 1/11/2011
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use report or article
+\documentclass[9pt]{book}
+
+\usepackage{fancyheadings}
+\usepackage{graphicx}
+\usepackage{latexsym}
+
+\usepackage{listings}
+
+\lstset{                        % Code
+language=Java,                  % choose the language of the code
+basicstyle=\footnotesize\ttfamily,
+%basicstyle=\small,             % the size of the fonts that are used for the
+%code numbers=\left,                   % where to put the line-numbers
+%numberstyle=\footnotesize,     % the size of the fonts that are used for the line-numbers
+stepnumber=2,                   % the step between two line-numbers. If it's 1 each line 
+                                % will be numbered
+numbersep=5pt,                  % how far the line-numbers are from the code
+%backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+frame=single,	                % adds a frame around the code
+tabsize=2,	                    % sets default tabsize to 2 spaces
+captionpos=b,                   % sets the caption-position to bottom
+breaklines=true,                % sets automatic line breaking
+breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+title=\lstname,                 % show the filename of files included with \lstinputlisting;
+                                % also try caption instead of title
+escapeinside={\%*}{*)},         % if you want to add a comment within your code
+morekeywords={*,...}            % if you want to add more keywords to the set
+}
+
+\pagestyle{fancy}
+\newcommand{\tstamp}{\today}   
+
+\lhead[\fancyplain{}{\thepage}]         {\fancyplain{}{\rightmark}}
+\chead[\fancyplain{}{}]                 {\fancyplain{}{}}
+\rhead[\fancyplain{}{\rightmark}]       {\fancyplain{}{\thepage}}
+
+\lfoot[ Berlin Brown - JVM Notebook - Creative Commons License ] 
+{\footnotesize\ttfamily\fancyplain{\tstamp}{\tstamp} }
+\rfoot[\fancyplain{\tstamp} {\tstamp}]  {\footnotesize\ttfamily\fancyplain{}{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% topmargin - top margin page to header
+%% headheight - running head box
+%% headsep - height of head to body
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\oddsidemargin = -0.4in
+\textwidth = 6.4in
+
+\headheight = 0in
+\headsep = 0in
+\topmargin = .05in
+\textheight = 9.8in
+
+\floatsep = .20in
+\textfloatsep = \floatsep
+\intextsep = \floatsep
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{The Artificial Intelligence Programming Notebook - Practical AI Software Development}
+
+\author{Berlin Brown\\
+  berlin.brown at gmail.com\\
+  Copyright 2011 Berlin Brown.  All rights reserved.\\ 
+  This work is licensed under a Creative Commons\\
+  Attribution-Noncommercial-No Derivative Works\\
+  Version 3.0 United States License. \\
+  Atlanta, Ga\\
+  \date{\today}}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Table of Contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% General Structure Notes:
+%% Overview, Introduction to Java programming
+%%   Java Tools - Development Environment (includes java1),
+%%   Object Oriented Programming,
+%%   Standard Java Libraries,
+%%   Swing programming/GUI Development,
+%%   Game/Graphic Development
+%%  
+%%   Web Development: 
+%%     Ajax, JQuery, Spring Hibernate Struts Wicket
+%%
+%%  Criticisms of Java, other languages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{overview}
+\include{cellular}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Bibliography (set the widest label)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{plain}
+\nocite{*}
+\bibliography{references}
+
+\end{document}
+%%--------------------------------------
+%% End of document 
+%%--------------------------------------

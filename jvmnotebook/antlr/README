@@ -1,0 +1,15 @@
+
+
+ http://www.antlr.org/
+ 
+ Wikipedia Definition:
+ http://en.wikipedia.org/wiki/ANTLR
+ -------------------------------- 
+ In computer based language recognition, ANother Tool for Language Recognition (ANTLR) 
+ is the name of a parser generator that uses LL(*) parsing. ANTLR is the successor 
+ to the Purdue Compiler Construction Tool Set (PCCTS), first developed in 1989, 
+ and is under active development. 
+ Its maintainer is professor Terence Parr of the University of San Francisco.
+
+ ANTLR rules are expressed in a format deliberately similar to EBNF instead of the 
+ regular expression syntax employed by other parser generators.

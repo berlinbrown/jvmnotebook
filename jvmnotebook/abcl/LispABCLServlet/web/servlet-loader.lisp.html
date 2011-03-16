@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.16 in css mode. -->
+<html>
+  <head>
+    <title>servlet-loader.lisp</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #000000;
+        background-color: #ffffff;
+      }
+      .builtin {
+        /* font-lock-builtin-face */
+        color: #0000ff;
+      }
+      .comment {
+        /* font-lock-comment-face */
+        color: #0000ff;
+        background-color: #f5f5f5;
+        font-style: italic;
+      }
+      .constant {
+        /* font-lock-constant-face */
+        color: #0000ff;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #8b008b;
+      }
+      .string {
+        /* font-lock-string-face */
+        color: #ff0000;
+        background-color: #f5f5f5;
+      }
+      .variable-name {
+        /* font-lock-variable-name-face */
+        color: #ff4500;
+        background-color: #e0ffff;
+      }
+      .warning {
+        /* font-lock-warning-face */
+        color: #ff0000;
+        background-color: #fffacd;
+      }
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+<span class="comment">;;
+;; Berlin Brown
+;;  - Lisp Based Servlet Startup
+;;
+</span>
+(<span class="keyword">require</span> '<span class="constant">asdf</span>)
+(setq *warn-on-redefinition* nil)
+
+(<span class="keyword">defvar</span> <span class="variable-name">*jfli-abcl-loaded*</span> nil)
+
+(<span class="keyword">with-simple-restart</span> (<span class="warning">abort</span> <span class="string">"Abort loading servlet"</span>)  
+  (<span class="keyword">when</span> (not (probe-file 
+              (merge-pathnames #p<span class="string">"packages/jfli-abcl/jfli-abcl.abcl"</span> 
+                               *load-pathname*)))
+
+    (print <span class="string">"INFO: Compiling jfli-abcl.."</span>)
+    (compile-file 
+     (merge-pathnames #p<span class="string">"packages/jfli-abcl/jfli-abcl.lisp"</span> *load-pathname*))
+    
+    (print <span class="string">"INFO: Compiling lml2.."</span>)
+    (pushnew (merge-pathnames #p<span class="string">"packages/lml2/"</span> *load-pathname*) 
+             asdf:*central-registry* <span class="builtin">:test</span> 'equal)
+    (asdf:oos 'asdf:compile-op <span class="builtin">:lml2</span>))
+  
+  (<span class="keyword">unless</span> *jfli-abcl-loaded*
+    (print <span class="string">"INFO: Loading jfli-abcl.."</span>)
+    (load (merge-pathnames #p<span class="string">"packages/jfli-abcl/jfli-abcl.abcl"</span> 
+                           *load-pathname*))
+    (setq *jfli-abcl-loaded* t))
+  
+  (print <span class="string">"INFO: Loading lml2.."</span>)
+  (pushnew (merge-pathnames #p<span class="string">"packages/lml2/"</span> *load-pathname*) asdf:*central-registry* <span class="builtin">:test</span> 'equal)
+  (asdf:oos 'asdf:load-op <span class="builtin">:lml2</span>)
+  
+  (print <span class="string">"INFO: Loading servlet code.."</span>)
+  (<span class="keyword">loop</span> (<span class="keyword">with-simple-restart</span> (retry <span class="string">"Retry loading servlet"</span>)
+          (<span class="keyword">return</span> (load 
+                   (merge-pathnames <span class="string">"servlet.lisp"</span> 
+                                    *load-pathname*))))))
+
+<span class="comment">;; End of File ;;</span></pre>
+  </body>
+</html>

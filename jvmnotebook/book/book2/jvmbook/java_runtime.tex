@@ -1,0 +1,74 @@
+% %-------------------------------------- % Scala and Lift
+% %--------------------------------------
+\chapter{More about the Java Virtual Machine}
+
+One of the exciting trends to recently emerge from the Java community is the
+concept of the JVM language. These technologies are all that you would expect
+them to be. They are implementations of languages that run on the Java Virtual
+Machine. Some are newly created and some are based on existing, more mature
+languages. JRuby, Jython are two JVM languages based on CRuby and CPython.
+Groovy, Scala, Clojure are three completely new JVM languages that were created
+to add new language features that weren't supported by the core Java language.
+Some must or can be compiled. Some run without compilation. You can easily
+compile Scala code to Java bytecode. Clojure also allows this feature (ahead of
+time compilation). Clojure and JRuby code can also run without having be
+explicitly compiled. You can interact with the language. In most cases and with
+most JVM languages, you have full access to existing libraries that were written
+in pure Java. And normally you can access existing JVM language code from Java
+(known as Java interoperability). In most cases, it is easier to access Java
+calls from the JVM language than it is to call the language code from Java. It
+really depends on the language. In the snippet below, there is a call to the
+System static method, 'nanoTime' . Simply invoke the system like you would from
+pure Java.
+
+  For the more popular JVM languages, like JRuby and Jython, there isn't much of
+  a difference between running code in their respective C implementations. JRuby
+  is especially well known for being very portable. With JRuby release 1.3.1,
+  JRuby is compatible with CRuby 1.8.6. Jython 2.5.0 was released last month and
+  brings the level of compatibility to CPython versions 2.5. Django and other
+  popular CPython based frameworks are able to work with Jython. You may be
+  wondering, if the Java Virtual Machine language is compatible with the C
+  language, native implementation, is there a loss in performance when running
+  on the Java Virtual Machine? Is there a major loss in performance? That is
+  this purpose of this document, how much time does it take for a particular
+  piece of code to run in JVM language? How long does it take to run similar
+  routines using pure Java code? I want to make it clear, you will not find a
+  large scientific benchmark run under clean room like conditions. I want to
+  present a simple set of routines and how long it took to run. How long did the
+  Clojure code run? How long did the Scala code run? Basically, I want to
+  present the code and how long each test ran, but I don't want to claim that
+  anyone language or piece of code is faster or slower based on these tests. You
+  could say that most of the pure Java code ran faster. Most of the time, that
+  is what happened after running these tests. But there is too much confounding
+  in my tests. Like Zed Shaw said, "If you want to measure something, then don't
+  measure other shit." [3] There is a lot of stuff in my tests to not make these
+  an official comparison. There is a lot of confounding. But, here is the code,
+  here is how long it took to run? It be relevant in more common tests like a
+  Project Euler problem. Project Euler is a website that contains math problems
+  intended to be solved with computer programs. In Project Euler problem number
+  one, I write a program in Clojure and then in Java. They both run on the JVM
+  and the same value is returned. What was the execution time for each program?
+  Simple tests, simple results.
+
+   When working with JVM languages and possible performance bottlenecks, you
+   want to consider execution time, but you also want to look at the garbage
+   collector and heap memory usage. Garbage collection is an expensive
+   operation. It won't take a minute to run a garbage collect, but it will take
+   cpu cycles away from your application. JVM code runs in a protected
+   environment, the garbage collector provides automatic memory management and
+   normally protects you from improper memory use. And the garbage collector
+   attempts to free up memory that is no longer needed. You can't normally
+   control when the JVM runs garbage collection and certainly don't want force
+   it. But if you monitor your application, you can identify memory leaks or
+   other problems that might cause performance bottlenecks. It will normally be
+   evident where there is a problem. If you see too many garbage collects within
+   a very short period of time and your total available memory is maxed out, you
+   might eventually encounter an out of memory error. In a long running server
+   environment, most of your performance issues might be alleviated if you look
+   at proper heap memory use. Is your code forcing too many garbage collections
+   within a short period of time? Are you creating too many large objects and
+   holding on to them for too long? In performance tuning your application,
+   there are many things to consider. It may not just be improving a particular
+   algorithm. Consider heap memory and object allocation as well. For most of
+   the tests, there are performance stats, memory stats and other garbage
+   collection statistics.

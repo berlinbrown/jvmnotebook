@@ -1,0 +1,52 @@
+%%--------------------------------------
+%% JRuby
+%%--------------------------------------
+\section{JRuby JVM Language}
+
+JRuby is a JVM language.  Allows for the syntatic sugar of Ruby.
+
+We discussed earlier how Jython is basically used for the backend 
+coding, that includes communicating with Hibernate. 
+Here are the code snippets associated with each of those operations. 
+Most of the code is fairly intuitive; at the heart of the 
+create operation, you must get the Hibernate SessionFactory 
+and initiate a transaction. Once that is done, 
+create an instance of the Hibernate POJO bean and populate 
+the bean with the data from the Struts ActionForm. 
+Once that is taken care of, use the session and transaction 
+object to save the data. The Edit operation probably contains 
+the most code and is seperated into two Jython classes.
+
+% Example jruby business logic.
+\begin{verbatim}
+  class BotverseController
+		
+  def initialize(controller)
+    @controller = controller
+    @daohelper = @controller.entityLinksDao
+  end
+
+  # Generate the view
+  def getModel(request)  
+    # Audit the request
+    @controller.auditLogPage(request, "botverse.html")
+	query = "from org.spirit.bean.impl.BotListEntityLinks"
+	postListings = @daohelper.pageEntityLinks(query, 
+	         nextPage, BotListConsts::MAX_RESULTS_PAGE)
+	map = BotListMapEntityLink.new    
+    map['listings'] = postListings
+    return map
+  end
+
+  def onSubmit(request, response, form, errors)
+    link = @daohelper.readLinkListing(ratingId)    
+    link.rating = link.rating + 1
+    @daohelper.createLink(link)
+    return form
+  end
+
+\end{verbatim}
+
+\subsection{JVM Languages}
+
+\subsection{Jython, Scala and Clojure}

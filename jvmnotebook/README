@@ -1,0 +1,45 @@
+
+http://code.google.com/p/jvmnotebook/
+
+---------------------------------------
+
+The Java Virtual Machine ( Sun's JVM is called HotSpot ) is a java bytecode interpreter 
+which is fast, portable and secure. Jython, JRuby, Scala, ABCL (Common Lisp) 
+are popular language implementations that run on the JVM that allow for the 
+jvmcookbook sugar of their particular languages.
+
+---------------------------------------
+
+This project contains multiple sub-projects and code demos related to those jvm language implementations.
+---------------------------------------
+JVM Resources
+---------------------------------------
+
+    * http://jruby.codehaus.org/ - JRuby Home
+    * http://groovy.codehaus.org/ - Groovy Home
+    * http://clojure.org/ - Clojure
+    * http://www.scala-lang.org/ - Scala is a general purpose programming language designed to express common programming patterns in a concise, elegant, and type-safe way. 
+
+    * http://www.jython.org - Jython
+    * http://common-lisp.net/project/armedbear/ - Armed Bear Common Lisp (ABCL) is an implementation of ANSI Common Lisp that runs in a Java virtual machine. 
+
+    * http://sisc-scheme.org/ - SISC, Second Interpreter of Scheme Code
+    * http://asm.objectweb.org/ - ASM, Java bytecode manipulation and analysis.
+     
+---------------------------------------
+Milestone and CHANGELOG highlights
+---------------------------------------
+
+JVM Notebook, set2 release (10/16/2008)
+	* New release including updates to projects to the following
+	jvm languages: abcl, antlr, ASM, clojure, groovy, jruby,
+	SISC, jython, scala		
+
+JVM Notebook, set1 release (3/27/2008)
+
+    * uploaded JRubySourceCodeManager.zip - example jruby web application oriented j2ee application. an example source code manager for viewing all of your source code in your project. Use of simple jruby/spring framework.
+    * uploaded jython_set1_d032008.zip - misc jython oriented examples including struts based application. Junit/Jython example and other notebook samples.
+    * uploaded scala_set1_d032008.zip - scala examples including scala/lift web project(note: using older version of scala source code)
+    * uploaded misc_NeuralNetworkJava?.zip - misc neural network example in java
+    * uploaded abcl_set1_d032008.zip - abcl/lisp examples including abcl oriented web example. 
+
