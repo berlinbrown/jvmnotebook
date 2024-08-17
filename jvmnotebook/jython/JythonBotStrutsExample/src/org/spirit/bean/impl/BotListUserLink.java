@@ -6,10 +6,6 @@ package org.spirit.bean.impl;
 
 import java.util.Calendar;
 
-/**
- * @author AP417
- *
- */
 public class BotListUserLink implements java.io.Serializable {
 
 	private Long id;
