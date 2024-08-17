@@ -6,10 +6,6 @@ package org.spirit.forms;
 
 import org.apache.struts.action.ActionForm;
 
-/**
- * @author AP417
- *
- */
 public class CityStateForm extends ActionForm {
 
 	/**
