@@ -6,10 +6,6 @@ package org.spirit.forms;
 
 import org.apache.struts.action.ActionForm;
 
-/**
- * @author AP417
- *
- */
 public class UserLinksForm extends ActionForm {
 
 	/**
@@ -78,3 +74,4 @@ public class UserLinksForm extends ActionForm {
 	}
 
 }
+
