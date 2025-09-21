@@ -13,10 +13,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author AP417
- *
- */
 public class DummyHttpResponse implements HttpServletResponse {
 
 	/**
@@ -277,3 +273,4 @@ public class DummyHttpResponse implements HttpServletResponse {
 
 
 }
+
