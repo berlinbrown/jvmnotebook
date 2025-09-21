@@ -21,10 +21,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-/**
- * @author AP417
- *
- */
 public class DummyHttpRequest implements HttpServletRequest {
 
 	/**
@@ -460,3 +456,4 @@ public class DummyHttpRequest implements HttpServletRequest {
 	}
 
 }
+
