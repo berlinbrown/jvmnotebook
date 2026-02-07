@@ -8,8 +8,7 @@ def download(address)
     out.close()   
 }
 
-System.properties.putAll( 
-  ["http.proxyHost": "proxy.pfsfhq.com", 
-   "http.proxyPort": "3128" ] )
+System.properties.putAll( )
+
 
 download("http://www.botnode.com")
