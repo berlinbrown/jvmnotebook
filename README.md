@@ -34,8 +34,6 @@ See `.github/copilot-instructions.md` for AI-agent-specific guidance (quick entr
     * uploaded misc_NeuralNetworkJava?.zip - misc neural network example in java
     * uploaded abcl_set1_d032008.zip - abcl/lisp examples including abcl oriented web example. 
 
-
-
 ### JVM Resources
 
     * http://jruby.codehaus.org/ - JRuby Home
@@ -48,3 +46,5 @@ See `.github/copilot-instructions.md` for AI-agent-specific guidance (quick entr
 
     * http://sisc-scheme.org/ - SISC, Second Interpreter of Scheme Code
     * http://asm.objectweb.org/ - ASM, Java bytecode manipulation and analysis.
+
+    
